@@ -1,0 +1,111 @@
+:root {
+    /* Nord Theme Colors */
+    --nord-polar-1: #2e3440;
+    --nord-polar-2: #3b4252;
+    --nord-polar-3: #434c5e;
+    --nord-polar-4: #4c566a;
+    --nord-snowstorm-1: #d8dee9;
+    --nord-snowstorm-2: #e5e9f0;
+    --nord-snowstorm-3: #eceff4;
+    --nord-frost-1: #8fbcbb;
+    --nord-frost-2: #88c0d0;
+    --nord-frost-3: #81a1c1;
+    --nord-frost-4: #5e81ac;
+    --nord-aurora-1: #bf616a;
+    --nord-aurora-1: #d08770;
+    --nord-aurora-1: #ebcb8b;
+    --nord-aurora-1: #a3be8c;
+    --nord-aurora-1: #b48ead;
+}
+
+@import url("../fonts/firacode/stylesheet.css");
+@media (min-width: 767px) {#v-hdr {position: absolute; top: -1000%;}}
+@media (max-width: 767px) {#h-hdr {position: absolute; top: -1000%;}}
+
+/* GENERAL SETTINGS */
+body {
+    background-color: var(--nord-polar-2);
+    color: var(--nord-snowstorm-1);
+    font: 16px 'Fira Code', Arial, Helvetica, sans-serif;
+    max-width: 1080px;
+    margin: auto;
+    padding: 0 5%;
+}
+
+/* TITLE */
+#title {
+    font-size: 50px;
+    padding: 20px 0;
+    font-weight: 600;
+    cursor: pointer; cursor: hand;
+}
+
+/* HEADER */
+header {
+    position: -webkit-sticky; /* Safari */
+    position: sticky; /* Decent browsers */
+    top: 0;
+    background-color: var(--nord-polar-2);
+    font-size: 22px;
+    text-align: center;
+    cursor: pointer; cursor: hand;
+}
+
+.active-btn {
+    background-color: var(--nord-polar-3);
+    color: pink;
+}
+
+/* VERTICAL HEADER */
+#v-hdr div {
+    border: var(--nord-polar-3) solid 1px;
+    padding: 5px;
+}
+#v-hdr div:hover { background-color: var(--nord-polar-4); }
+#v-hdr div a {
+    color: var(--nord-snowstorm-1);
+    text-decoration: none;
+}
+
+/* HORIZONTAL HEADER */
+#h-hdr {
+    display: flex;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+#h-hdr div:hover { background-color: var(--nord-polar-4); }
+#h-hdr div {
+    flex-grow: 1;
+    border: var(--nord-polar-3) solid 1px;
+    width: 25%;
+    padding: 0.5%;
+}
+#h-hdr div a {
+    color: var(--nord-snowstorm-1);
+    text-decoration: none;
+}
+#h-hdr div a:hover {
+    font-weight: normal;
+}
+
+/* LINKS */
+a { color: var(--nord-frost-2); }
+a:hover {
+    color: var(--nord-frost-2);
+    font-weight: bold;
+}
+
+/* FOOTER */
+hr {
+    border-color: var(--nord-frost-2); /* Chrome + Safari */
+    background-color: var(--nord-frost-2); /* Firefox + Opera */
+    color: var(--nord-frost-2); /* IE7+ */
+}
+
+/* CONTENT BLOCKS */
+.content {
+    margin: 15px 0;
+    padding: 5px;
+    background-color: var(--nord-polar-4);
+}
