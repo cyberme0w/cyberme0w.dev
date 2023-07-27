@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Cyberme0w&#39;s Website</title>
-    <link>https://cyberme0w.codeberg.page/tags/</link>
-    <description>Recent content in Tags on Cyberme0w&#39;s Website</description>
+    <title>Tags on cyberme0w&#39;s</title>
+    <link>https://cyberme0w.dev/tags/</link>
+    <description>Recent content in Tags on cyberme0w&#39;s</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://cyberme0w.codeberg.page/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Mar 2023 15:51:33 +0100</lastBuildDate><atom:link href="https://cyberme0w.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>meta</title>
+      <link>https://cyberme0w.dev/tags/meta/</link>
+      <pubDate>Sat, 18 Mar 2023 15:51:33 +0100</pubDate>
+      
+      <guid>https://cyberme0w.dev/tags/meta/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
