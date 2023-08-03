@@ -6,7 +6,17 @@
     <description>Recent content on cyberme0w&#39;s</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Jul 2023 22:58:39 +0200</lastBuildDate><atom:link href="https://cyberme0w.dev/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 03 Aug 2023 22:10:19 +0200</lastBuildDate><atom:link href="https://cyberme0w.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Initial Commit: Open Bike</title>
+      <link>https://cyberme0w.dev/posts/initial-commit-open-bike/</link>
+      <pubDate>Thu, 03 Aug 2023 22:10:19 +0200</pubDate>
+      
+      <guid>https://cyberme0w.dev/posts/initial-commit-open-bike/</guid>
+      <description>Repository: https://codeberg.org/cyberme0w/open-bike
+For some time now, I&amp;rsquo;ve been annoyed with NextBike&amp;rsquo;s application. I do appreciate the work that went into it, however it seems to be at best a bloated application, and at its worst, amateur hour. From random pop-up toasts like &amp;lsquo;LOL&amp;rsquo;, to the fact that the map crawls to a halt whenever you open it, because there is no way to save your vehicle filter, it is just a pain to use.</description>
+    </item>
+    
     <item>
       <title>Contact Information</title>
       <link>https://cyberme0w.dev/contact/</link>
