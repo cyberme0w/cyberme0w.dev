@@ -22,52 +22,77 @@
     <div id="content">
 <h1>> Posts / Initial Commit: Open Bike</h1>
 <hr>
-<p>Repository: <a href="https://codeberg.org/cyberme0w/open-bike">https://codeberg.org/cyberme0w/open-bike</a></p>
+<p>Codeberg Repository: <a href="https://codeberg.org/cyberme0w/open-bike">https://codeberg.org/cyberme0w/open-bike</a></p>
+<p>F-Droid: <a href="https://f-droid.org/packages/dev.cyberme0w.openbike/">https://f-droid.org/packages/dev.cyberme0w.openbike/</a></p>
 <hr>
-<p>For some time now, I&rsquo;ve been annoyed with NextBike&rsquo;s application. I do
-appreciate the work that went into it, however it seems to be at best a bloated
-application, and at its worst, amateur hour. From random pop-up toasts like
-&lsquo;LOL&rsquo;, to the fact that the map crawls to a halt whenever you open it, because
-there is no way to save your vehicle filter, it is just a pain to use. So I
-decided to make my own frontend.</p>
-<p>Credit should go where credit is due, the effort behind reverse-engineering
-NextBike&rsquo;s API goes to <a href="https://github.com/cybre-finn">cybre-finn</a>. They have
-published their <a href="https://github.com/cybre-finn/nextbike-api-reverse-engineering">research
-results</a> as
-well as developed <a href="https://github.com/cybre-finn/next-companion">Next
-Companion</a>, which is a minimal
-Android client implementation.</p>
-<p>Minimal really does mean minimal - the application allows one to sign-in, rent
-a bike, and see what bikes are currently active on the account, but that&rsquo;s it.</p>
-<p>Personally, I&rsquo;d like to have just a little bit more &lsquo;hmph&rsquo; - for instance:</p>
+<p>For the uninitiated, <a href="https://www.nextbike.net">NextBike</a> is a bike-sharing
+company. You can register with them and then simply rent a bike, use it, and
+return it. They&rsquo;ve been around since 2004 and since then expanded into 20
+countries. They were also recently <a href="https://www.reuters.com/business/autos-transportation/e-scooter-firm-tier-buys-nextbike-bid-expand-offerings-2021-11-15/">acquired by Tier
+Mobility</a>,
+which is famous for their e-scooters.</p>
+<p>I myself am a (mostly) happy customer of NextBike and enjoy their service,
+since for me it means I can freely use their bikes whenever I need, without
+having to think about maintenance or where to store the bike in my small
+appartment. It also allows me to go somewhere by foot and then come back by
+bike, or vice-versa, and in general, it has pushed me more to use my own
+muscles to move around, as opposed to taking an over-crowded bus.</p>
+<p>I say &ldquo;mostly&rdquo;, because while I am happy with the actual service, their
+application is another story. Briefly pointing out what has been bothering
+me in no particular order:</p>
 <ul>
-<li>A locally stored history of what rides I took and how long they took</li>
-<li>Re-triggering an unlock, since sometimes locks get stuck</li>
-<li>A QR-Code scanner, to avoid having to manually type in the bike-ID</li>
-<li>A prettier design in general, as the original is quite minimal</li>
+<li>The applications are closed source.</li>
+<li>The main activity is very poorly optimized (zoomed out map filled with
+markers).</li>
+<li>The map is filled with e-scooters even though these are not bookable via the
+app (an obvious free publicity opportunity for Tier).</li>
+<li>While you filter out e-scooters, the filter is reset once you restart the app.</li>
+<li>There is no way to mark a station as favorite. Sometimes, all I want is to be
+able to quickly check if one of my regular stations has a bike.</li>
 </ul>
-<p>I am also writting the application in Kotlin instead of the minimal client&rsquo;s
-Java, which should be fun to learn.</p>
+<p>So what to do now? NextBike&rsquo;s API is a DuckDuckGo search away, so surely there
+must be another client we can use, right? As usual, the answer is &ldquo;It depends™&rdquo;.</p>
+<p>The alternative client I found is
+<a href="https://f-droid.org/packages/com.example.hochi.nextcompanion/">NextCompanion</a>,
+by <a href="https://github.com/cybre-finn/">cybre-finn</a>. They also reverse engineered
+NextBike&rsquo;s API and published <a href="https://github.com/cybre-finn/nextbike-api-reverse-engineering">their
+results</a>.</p>
+<p>NextCompanion calls itself <em>&ldquo;a minimalistic client for Nextbike&rdquo;</em> and it keeps
+its word. With it, you can type out a bike&rsquo;s number to rent it, and get an
+overview of your rented bikes. No more, no less. I am sure people on the more
+extreme end of the bloat-minimalism spectrum will be overjoyed using it, but I
+would like one or two features more.</p>
+<p>Inspired by the simplicity of NextCompanion, I decided to write my own app. I
+like boring apps. The more boring an app, the better. It means you will do
+whatever you need it for, and then tuck it away again. Due to that, I will be
+refraining from adding any unnecessary polish to the app until the following
+functions are up and running:</p>
+<ul>
+<li>QR-Code scanner to replace manually having to input the bike&rsquo;s ID</li>
+<li>Re-triggering an unlock, since sometimes locks get stuck</li>
+<li>Pausing rentals</li>
+<li>See an overview of favorite stations and their bike count</li>
+<li>Locally store rentals (rental history + can show interesting statistical data)</li>
+</ul>
 
 <hr>
 <p>
 Published: <time datetime="2023-08-03">2023-08-03</time>
 <br>
-<span>Tags: </span>
+<span>[</span>
   <a href="https://cyberme0w.dev/tags/android">android</a>
   <a href="https://cyberme0w.dev/tags/project">project</a>
-  <a href="https://cyberme0w.dev/tags/kotlin">kotlin</a></details>
+  <a href="https://cyberme0w.dev/tags/kotlin">kotlin</a><span> ]</span>
+</details>
 
 </p>
 </div>
 <hr>
   <footer>
-    <p>Copyright 2022-2023 cyberme0w (Iúri Archer). The opinions expressed here
-    are solely my own and do not reflect those of my past, present, or future
-    employers.</p>
-    <p>Enjoyed the read and would like to support me? Please consider
-    <a href="https://www.buymeacoffee.com/iuriarcher">sending a coffee my
-    way</a>!</p>
+    <p>cyberme0w.dev © 2023 -
+      <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"
+         target="_blank" rel="license noopener noreferrer">CC BY-NC-SA 4.0</a>
+    </p>
   </footer>
 
   </body>

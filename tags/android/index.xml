@@ -13,8 +13,10 @@
       <pubDate>Thu, 03 Aug 2023 22:10:19 +0200</pubDate>
       
       <guid>https://cyberme0w.dev/posts/initial-commit-open-bike/</guid>
-      <description>Repository: https://codeberg.org/cyberme0w/open-bike
-For some time now, I&amp;rsquo;ve been annoyed with NextBike&amp;rsquo;s application. I do appreciate the work that went into it, however it seems to be at best a bloated application, and at its worst, amateur hour. From random pop-up toasts like &amp;lsquo;LOL&amp;rsquo;, to the fact that the map crawls to a halt whenever you open it, because there is no way to save your vehicle filter, it is just a pain to use.</description>
+      <description>Codeberg Repository: https://codeberg.org/cyberme0w/open-bike
+F-Droid: https://f-droid.org/packages/dev.cyberme0w.openbike/
+For the uninitiated, NextBike is a bike-sharing company. You can register with them and then simply rent a bike, use it, and return it. They&amp;rsquo;ve been around since 2004 and since then expanded into 20 countries. They were also recently acquired by Tier Mobility, which is famous for their e-scooters.
+I myself am a (mostly) happy customer of NextBike and enjoy their service, since for me it means I can freely use their bikes whenever I need, without having to think about maintenance or where to store the bike in my small appartment.</description>
     </item>
     
   </channel>
