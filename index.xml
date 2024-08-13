@@ -19,15 +19,27 @@ But why? Aren&amp;rsquo;t there already tools for that? I&amp;rsquo;ve tried a c
     </item>
     
     <item>
-      <title>Initial Commit: Open Bike</title>
-      <link>https://cyberme0w.dev/posts/initial-commit-open-bike/</link>
-      <pubDate>Thu, 03 Aug 2023 22:10:19 +0200</pubDate>
+      <title>OpenBike</title>
+      <link>https://cyberme0w.dev/dev/open-bike/</link>
+      <pubDate>Thu, 03 Aug 2023 22:48:20 +0200</pubDate>
       
-      <guid>https://cyberme0w.dev/posts/initial-commit-open-bike/</guid>
+      <guid>https://cyberme0w.dev/dev/open-bike/</guid>
       <description>Codeberg Repository: https://codeberg.org/cyberme0w/open-bike
 F-Droid: https://f-droid.org/packages/dev.cyberme0w.openbike/
-For the uninitiated, nextbike is a bike-sharing company. Users pay a fee and can rent bikes from multiple stations within a city, with some cities offering &amp;lsquo;floating&amp;rsquo; bikes, which can be rented and returned anywhere.
+Open Bike For the uninitiated, nextbike is a bike-sharing company. Users pay a fee and can rent bikes from multiple stations within a city, with some cities offering &amp;lsquo;floating&amp;rsquo; bikes, which can be rented and returned anywhere.
 I myself have been a mostly happy customer of nextbike for some time now. In my case, not having to deal with maintenance, as well as not using up precious space in my small apartment are great benefits.</description>
+    </item>
+    
+    <item>
+      <title>dmbm</title>
+      <link>https://cyberme0w.dev/dev/dmbm/</link>
+      <pubDate>Mon, 31 Jul 2023 14:39:08 +0200</pubDate>
+      
+      <guid>https://cyberme0w.dev/dev/dmbm/</guid>
+      <description>Repository: https://codeberg.org/cyberme0w/dmbm
+dmbm is a bookmarking extension for dmenu, a launcher for tiling window managers such as i3 or dwm.
+Since it is not bound to any specific browser and instead uses xdotool, you can use it across multiple browsers, as well as any other program that accepts cursor input. This also makes it a viable copy-pasta board!
+It is written in bash, which makes it easily extensible, and stores bookmarks in plain text, within a folder-hierarchy.</description>
     </item>
     
     <item>
@@ -36,9 +48,8 @@ I myself have been a mostly happy customer of nextbike for some time now. In my 
       <pubDate>Sun, 30 Jul 2023 22:58:39 +0200</pubDate>
       
       <guid>https://cyberme0w.dev/contact/</guid>
-      <description>Contact Information Social Email: cyberme0w Matrix: @cyberme0w:matrix.org Repositories Codeberg Github (archive) Attribution I use Hugo to generate this website&amp;rsquo;s pages from Markdown.
-At any given point, one of the following themes will be deployed:
-Nord Theme Gruvbox (dark) </description>
+      <description>Email This is generally the easiest way to reach me. I’ve given a handful of social platforms a try, but have come to the conclusion that they are just not for me. You can reach me at:
+cyberme0w Repositories For anything software related, it’s usually more appropriate to open an issue in the respective repository. Of course, this implies you have an account there. If in doubt, just send an e-mail.</description>
     </item>
     
   </channel>

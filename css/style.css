@@ -160,3 +160,10 @@ footer {
   padding: 5px;
   background-color: var(--nord-polar-4);
 }
+
+/* TABLES */
+table, th, td {
+  border: 1px solid var(--separator-color);
+  border-collapse: collapse;
+  padding: 5px;
+}
