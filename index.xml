@@ -19,6 +19,16 @@ But why? Aren&amp;rsquo;t there already tools for that? I&amp;rsquo;ve tried a c
     </item>
     
     <item>
+      <title>XDG</title>
+      <link>https://cyberme0w.dev/posts/rant-about-xdg/</link>
+      <pubDate>Thu, 01 Feb 2024 17:07:45 +0100</pubDate>
+      
+      <guid>https://cyberme0w.dev/posts/rant-about-xdg/</guid>
+      <description>Quick, no time for questions! Open a terminal and run:
+ls -A | wc -l That&amp;rsquo;s the number of files, folders and other tidbits that have been placed in your $HOME (with or without your blessing). Can you justify that number? Do you even know what is going on there? Personally, I like to keep my home as clean as possible, so let&amp;rsquo;s take a look and try to do a little spring cleaning.</description>
+    </item>
+    
+    <item>
       <title>OpenBike</title>
       <link>https://cyberme0w.dev/dev/open-bike/</link>
       <pubDate>Thu, 03 Aug 2023 22:48:20 +0200</pubDate>

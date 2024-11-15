@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <title>cyberme0w&#39;s | XDG</title>
+  </head>
+
+  <body>
+    <div id="title">cyberme0w&#39;s<a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a>
+      <span id="meow">🐾MEOW🐾</span>
+    </div>
+    <header>
+      <ul class="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dev/">Dev</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </header>
+
+    <div id="content">
+<h1>XDG</h1>
+<p>
+Published: <time datetime="2024-02-01">2024-02-01</time>
+<span>[</span>
+  <a href="https://cyberme0w.dev/tags/rant">rant</a>
+  <a href="https://cyberme0w.dev/tags/standards">standards</a><span> ]</span>
+</details>
+
+</p>
+<hr>
+<!-- raw HTML omitted -->
+<p>Quick, no time for questions! Open a terminal and run:</p>
+<pre tabindex="0"><code>ls -A | wc -l
+</code></pre><p>That&rsquo;s the number of files, folders and other tidbits that have been placed in
+your <code>$HOME</code> (with or without your blessing). Can you justify that number? Do
+you even <em>know</em> what is going on there? Personally, I like to keep my home as
+clean as possible, so let&rsquo;s take a look and try to do a little spring cleaning.</p>
+<h2 id="brief-background-on-xdg">Brief background on XDG</h2>
+<p><code>XDG</code> or &ldquo;Cross Desktop Group&rdquo; (previously known as <a href="https://en.wikipedia.org/wiki/Freedesktop.org">X Desktop
+Group</a>) is an ongoing project
+with the goal of improving UNIX-like operating systems&rsquo; interoperability. They
+have a multitude of software projects and specifications which you&rsquo;ll find over
+at <a href="https://freedesktop.org">https://freedesktop.org</a>. While their other projects are also interesting,
+the one that I most frequently come across (that is, the one I am forcibly
+reminded of) is the &ldquo;<code>XDG</code> Desktop Base Directories&rdquo; specification, or
+<code>basedir</code> for short.</p>
+<p>At ~800 words, <code>basedir</code> is a short document which provides sensible defaults
+for the storage location of user-specific application files. Should any of the
+variables defined in the spec not be set, the specification also provides
+sensible <strong>default values</strong>. There are seven base directories for the following
+file types:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">File type</th>
+<th style="text-align:center">Default value</th>
+<th style="text-align:center">Environment Variable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">data files</td>
+<td style="text-align:center"><code>$HOME/.local/share</code></td>
+<td style="text-align:center"><code>XDG_DATA_HOME</code> / <code>XDG_DATA_DIRS</code></td>
+</tr>
+<tr>
+<td style="text-align:center">configuration files</td>
+<td style="text-align:center"><code>$HOME/.config</code></td>
+<td style="text-align:center"><code>XDG_CONFIG_HOME</code> / <code>XDG_CONFIG_DIRS</code></td>
+</tr>
+<tr>
+<td style="text-align:center">state data</td>
+<td style="text-align:center"><code>$HOME/.local/state</code></td>
+<td style="text-align:center"><code>XDG_STATE_HOME</code></td>
+</tr>
+<tr>
+<td style="text-align:center">non-essential (cached) data</td>
+<td style="text-align:center"><code>$HOME/.cache</code></td>
+<td style="text-align:center"><code>XDG_CACHE_HOME</code></td>
+</tr>
+<tr>
+<td style="text-align:center">runtime files and other file objects</td>
+<td style="text-align:center"><em>(no default value)</em></td>
+<td style="text-align:center"><code>XDG_RUNTIME_DIR</code></td>
+</tr>
+<tr>
+<td style="text-align:center">executable files</td>
+<td style="text-align:center"><code>$HOME/.local/bin</code></td>
+<td style="text-align:center"><em>(no environment variable)</em></td>
+</tr>
+</tbody>
+</table>
+<p>To put this information into context, let&rsquo;s say we maintain an application
+called <code>send-bees</code>. It sends bees over TCP/IP to a conveniently preexisting
+<code>beehive</code>, keeps a record of how many bees were sent in a single bee-sending
+session, as well as the total number of bees sent, and keeps a cached log of
+your activity per session (unless configured for persistent logs).</p>
+<p>If <code>send-bees</code> is to respect the <code>basedir</code> specification, it will behave
+something like this:</p>
+<ul>
+<li>look for the config file with the default amount of bees to send, the
+recipients address, as well as the log policy under
+<code>$XDG_CONFIG_HOME/send-bees/config.yaml</code> (<code>YAML</code> is fine as an example, don&rsquo;t
+@ me),</li>
+<li>store the total quantity of bees sent in
+<code>$XDG_STATE_HOME/send-bees/total-bees</code></li>
+<li>open a socket under <code>$XDG_RUNTIME_DIR/send-bees/socket</code></li>
+<li>cache any bees sent this during the current session in
+<code>$XDG_CACHE_HOME/send-bees/{cache-file}</code></li>
+</ul>
+<p>There are some benefits to this, other than having things neatly structured. It also
+seems to be bothering me enough - to the point I feel it became rant-worthy. Let&rsquo;s see what
+advantages we get from complying with the spec:</p>
+<ol>
+<li>config files are all in a single directory</li>
+<li><code>$XDG_CONFIG_HOME</code> contains only text files and can sensibly be
+version-controlled with <code>git</code></li>
+<li>configuring a new device to your liking is as simple as <code>cp -r /backup/.config ~</code> (or <code>git clone git@host:user/config .config</code> if it is
+hosted somewhere)</li>
+<li>data and state files are in an expected location, as opposed to
+<em><strong>ｓｏｍｅｗｈｅｒｅ</strong></em>, depending on how the developer was feeling that
+day, and can easily be removed/analyzed/backed up</li>
+<li>Your <code>$XDG_CACHE_HOME</code> can be moved to a
+<a href="https://wiki.archlinux.org/title/Tmpfs"><code>tmpfs</code></a></li>
+</ol>
+<p>What our application should most definitely <em>not</em> do, is to automatically
+create the <code>$HOME/.send-bees/</code> directory and dump everything in there, or
+perhaps even more perplexing, *actively look for <code>$XDG_CONFIG_HOME</code>, implying
+it complies with <code>basedir</code>, but then dump everything, including cache, state,
+runtime files, etc into it and call it a day, effectively rendering any kind of
+version controlling ineffective.</p>
+<p>Unfortunately, most applications do not follow <code>basedir</code>, or require setting
+some environment variables to look in the right places:</p>
+<ul>
+<li>Firefox, as well as any forks (e.g. Librewolf) insist on creating <code>~/.mozilla/</code></li>
+<li>Thunderbird behaves similarly to Firefox</li>
+<li>Android Studio claims <code>~/.android</code>, <em>even though it allows you to configure
+what folders it should look in</em></li>
+<li>Dart, Nim, Gradle, and other languages insist in creating their own <code>~/.{language}</code>
+folders. Java (specifically <code>OpenJDK</code>) likes to create <code>~/.java/fonts</code></li>
+<li>Anything Chromium based (that includes every single Electron application)
+dumps all its files in <code>$XDG_CONFIG_HOME/app/</code></li>
+</ul>
+<p>&hellip; <a href="https://wiki.archlinux.org/title/XDG_Base_Directory#Hardcoded">and the list goes on</a>.</p>
+<p>Many of these have have a workaround, but that&rsquo;s usually it - a hack. Meaning,
+every time I install a new piece of software, I have to look up if it will fill
+my <code>~/.config</code> with junk.</p>
+<p>There are tools like <a href="https://github.com/b3nj5m1n/xdg-ninja">xdg-ninja</a> which
+can help in cleaning up, but it would be great if more applications simply
+respected the spec.</p>
+<p>*sigh*</p>
+
+<hr>
+</div>
+<hr>
+  <footer>
+    <p>cyberme0w.dev © 2024 -
+      <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"
+         target="_blank" rel="license noopener noreferrer">CC BY-NC-SA 4.0</a>
+    </p>
+  </footer>
+
+  </body>
+</html>
