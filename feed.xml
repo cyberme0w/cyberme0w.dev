@@ -1,0 +1,465 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version='2.0'>
+  <channel>
+    <title>cyberme0w's corner café</title>
+    <link>https://cyberme0w.dev</link>
+    <description></description>
+    <language>en-us</language>
+    <pubDate>Sat, 01 Mar 2025 21:20:00 +0100</pubDate>
+    <lastBuildDate>2025-03-01T21:20:00Z</lastBuildDate>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <atom:link xmlns:atom='http://www.w3.org/2005/Atom' href='https://cyberme0w.dev/feed.xml' rel='self' type='application/rss+xml'/>
+    <item>
+      <title>XDG compliance, or the overwhelming lack thereof</title>
+      <link>https://cyberme0w.dev/blog/xdg.html</link>
+      <guid>https://cyberme0w.dev/blog/xdg.html</guid>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 +0100</pubDate>
+      <description>
+&lt;h1 id="xdg-compliance-or-the-overwhelming-lack-thereof"&gt;XDG compliance,
+or the overwhelming lack thereof&lt;/h1&gt;
+&lt;p&gt;Quick; no time for questions! Open a terminal and run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ls -A | wc -l&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That's the number of files, folders and other tidbits that have been
+placed in your &lt;code&gt;$HOME&lt;/code&gt; (with &lt;em&gt;or without&lt;/em&gt; your
+blessing). Can you justify that number? Do you even know what is going
+on there? Personally, I like to keep my home as clean as possible, so
+let’s take a look and try to do a little spring cleaning.&lt;/p&gt;
+&lt;h2 id="a-brief-background-on-xdg"&gt;a brief background on XDG&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;XDG&lt;/code&gt; or "Cross Desktop Group" (previously known as &lt;a
+href="https://en.wikipedia.org/wiki/Freedesktop.org"&gt;X Desktop
+Group&lt;/a&gt;) is an ongoing project with the goal of improving UNIX-like
+operating systems' interoperability. They have a multitude of software
+projects and specifications which you can find over at &lt;a
+href="https://freedesktop.org" class="uri"&gt;https://freedesktop.org&lt;/a&gt;.
+While their other projects are also interesting, the one we're focused
+on during this rant is the "&lt;code&gt;XDG&lt;/code&gt; Desktop Base Directories"
+specification - &lt;code&gt;basedir&lt;/code&gt; for short.&lt;/p&gt;
+&lt;p&gt;At ~800 words, &lt;code&gt;basedir&lt;/code&gt; is a short document which
+provides sensible defaults for the storage location of user-specific
+files. It also defines some environment variables that can be set to
+&lt;em&gt;override&lt;/em&gt; the default locations. There are seven base
+directories for the following file types:&lt;/p&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col style="width: 35%" /&gt;
+&lt;col style="width: 29%" /&gt;
+&lt;col style="width: 34%" /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class="header"&gt;
+&lt;th style="text-align: center;"&gt;File type&lt;/th&gt;
+&lt;th style="text-align: center;"&gt;Default value&lt;/th&gt;
+&lt;th style="text-align: center;"&gt;Environment Variable&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class="odd"&gt;
+&lt;td style="text-align: center;"&gt;data files&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.local/share&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_DATA_HOME&lt;/code&gt; /
+&lt;code&gt;XDG_DATA_DIRS&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="even"&gt;
+&lt;td style="text-align: center;"&gt;configuration files&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.config&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_CONFIG_HOME&lt;/code&gt; /
+&lt;code&gt;XDG_CONFIG_DIRS&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="odd"&gt;
+&lt;td style="text-align: center;"&gt;state data&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.local/state&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_STATE_HOME&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="even"&gt;
+&lt;td style="text-align: center;"&gt;non-essential (cached) data&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.cache&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_CACHE_HOME&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="odd"&gt;
+&lt;td style="text-align: center;"&gt;runtime files and other file
+objects&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;em&gt;(no default value)&lt;/em&gt;&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_RUNTIME_DIR&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="even"&gt;
+&lt;td style="text-align: center;"&gt;executable files&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.local/bin&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;&lt;em&gt;(no environment variable)&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To put this information into context, let's say we are writing an
+application called &lt;code&gt;send-bees&lt;/code&gt;. It sends bees over TCP/IP to
+a conveniently preexisting &lt;code&gt;beehive&lt;/code&gt;, keeps a record of how
+many bees were sent in a single bee-sending session, as well as the
+total number of bees sent. It also keeps a log of your activity per
+session.&lt;/p&gt;
+&lt;p&gt;It &lt;code&gt;send-bees&lt;/code&gt; respects the &lt;code&gt;basedir&lt;/code&gt;, it will
+behave something like this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;look for the config file with the default ammount of bees to send,
+&lt;code&gt;beehive&lt;/code&gt; address, log policy, etc. under
+&lt;code&gt;$XDG_CONFIG_HOME/send-bees/config&lt;/code&gt; (The file name itself is
+not specified, so anything goes here, e.g.
+&lt;code&gt;send-bees.config&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;store the total quantity of bees sent in
+&lt;code&gt;$XDG_STATE_HOME/send-bees/current&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;open a socket under
+&lt;code&gt;$XDG_RUNTIME_DIR/send-bees/beehive-socket&lt;/code&gt; (once again, file
+names don't matter - folders do)&lt;/li&gt;
+&lt;li&gt;cache any bees sent during the current session in
+&lt;code&gt;$XDG_CACHE_HOME/send-bees/session&lt;/code&gt;, which later may get
+dumped to the total bees file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are some benefits to this beyond than having things neatly
+structured. It also seems to be bothering me enough - to the point I
+feel it became rant-worthy. Let’s see what advantages we get from
+complying with the spec:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;config files are all in a single directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt; contains only text files and can
+sensibly be version-controlled with git&lt;/li&gt;
+&lt;li&gt;configuring a new device to your liking is as simple as
+&lt;code&gt;cp -r   /backup/.config ~&lt;/code&gt; (or
+&lt;code&gt;git clone git@host:user/config .config&lt;/code&gt; if you are
+cool)&lt;/li&gt;
+&lt;li&gt;data and state files are in an expected location, as opposed to
+&lt;strong&gt;&lt;em&gt;ｓｏｍｅｗｈｅｒｅ&lt;/em&gt;&lt;/strong&gt;, depending on how the
+developer was feeling that day, and can easily be
+removed/analyzed/backed up&lt;/li&gt;
+&lt;li&gt;your &lt;code&gt;$XDG_CACHE_HOME&lt;/code&gt; can be moved to a &lt;a
+href="https://wiki.archlinux.org/title/Tmpfs"&gt;&lt;code&gt;tmpfs&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What our application should most definitely &lt;em&gt;not do&lt;/em&gt;, is to
+automatically create the &lt;code&gt;$HOME/.send-bees/&lt;/code&gt; directory and
+dump everything in there, or perhaps even more perplexing, use
+&lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt;, implying it complies with basedir, but
+then &lt;em&gt;dump everything, including cache, state, runtime files, etc.
+into it&lt;/em&gt; and call it a day, effectively rendering any kind of
+version controlling ineffective.&lt;/p&gt;
+&lt;p&gt;Unfortunately, most applications do not follow &lt;code&gt;basedir&lt;/code&gt;,
+or require setting some environment variables to look in the right
+places:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Firefox, as well as any forks (e.g. Librewolf) insist on creating
+&lt;code&gt;~/.mozilla/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Thunderbird behaves similarly to Firefox&lt;/li&gt;
+&lt;li&gt;Android Studio claims &lt;code&gt;~/.android&lt;/code&gt;, even though it allows
+you to configure what folders it should look in&lt;/li&gt;
+&lt;li&gt;Dart, Nim, Gradle, and other languages insist in creating their own
+&lt;code&gt;~/.{language}&lt;/code&gt; folders&lt;/li&gt;
+&lt;li&gt;Anything Chromium based (that includes every single Electron
+application) dumps all its files in
+&lt;code&gt;$XDG_CONFIG_HOME/app/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;... &lt;a
+href="https://wiki.archlinux.org/title/XDG_Base_Directory#Hardcoded"&gt;and
+the list goes on&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Many of these have have a workaround, but that’s usually it - a hack.
+Meaning, every time I install a new piece of software, I have to look up
+if it will fill my &lt;code&gt;~/.config&lt;/code&gt; with junk.&lt;/p&gt;
+&lt;p&gt;There are tools like &lt;a
+href="https://github.com/b3nj5m1n/xdg-ninja"&gt;xdg-ninja&lt;/a&gt; which can
+help in cleaning up, but it would be great if more applications simply
+respected the spec.&lt;/p&gt;
+&lt;p&gt;*sigh*&lt;/p&gt;
+      </description>
+    </item>
+    <item>
+      <title>dmbm - browser-agnostic bookmarking</title>
+      <link>https://cyberme0w.dev/blog/dmbm.html</link>
+      <guid>https://cyberme0w.dev/blog/dmbm.html</guid>
+      <pubDate>Wed, 23 Aug 2023 01:00:00 +0200</pubDate>
+      <description>
+&lt;h1 id="dmbm-browser-agnostic-bookmarking"&gt;&lt;code&gt;dmbm&lt;/code&gt;:
+Browser-agnostic bookmarking&lt;/h1&gt;
+&lt;p&gt;(Repository: &lt;a href="https://codeberg.org/cyberme0w/dmbm"
+class="uri"&gt;https://codeberg.org/cyberme0w/dmbm&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dmbm&lt;/code&gt; is a bookmarking extension for &lt;a
+href="https://tools.suckless.org/dmenu/"&gt;dmenu&lt;/a&gt;, a launcher for
+tiling window managers such as &lt;a href="https://i3wm.org"&gt;i3&lt;/a&gt; or &lt;a
+href="https://dwm.suckless.com"&gt;dwm&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It is not bound to any browser and uses &lt;code&gt;xdotool&lt;/code&gt;, meaning
+you can use it across multiple browsers, as well as any other program
+that accepts cursor input. It also works well enough as a copy-pasta
+board.&lt;/p&gt;
+&lt;p&gt;It is written in &lt;code&gt;bash&lt;/code&gt;, which makes it easy to extend,
+and stores bookmarks in plain text files within the bookmarks'
+folder-hierarchy.&lt;/p&gt;
+&lt;h2 id="preview"&gt;Preview&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src="/media/dmbm-preview-browser.gif"
+alt="Preview opening bookmarks in the browser with dmbm" /&gt;
+&lt;figcaption aria-hidden="true"&gt;Preview opening bookmarks in the browser
+with &lt;code&gt;dmbm&lt;/code&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src="/media/dmbm-preview-cursor.gif"
+alt="Preview writing bookmarked data to the cursor with xdotool" /&gt;
+&lt;figcaption aria-hidden="true"&gt;Preview writing bookmarked data to the
+cursor with &lt;code&gt;xdotool&lt;/code&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+      </description>
+    </item>
+    <item>
+      <title>doot</title>
+      <link>https://cyberme0w.dev/blog/doot.html</link>
+      <guid>https://cyberme0w.dev/blog/doot.html</guid>
+      <pubDate>Mon, 12 Feb 2024 00:00:00 +0100</pubDate>
+      <description>
+&lt;h1 id="doot"&gt;doot 📯&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;doot&lt;/code&gt; is a bash script (&lt;code&gt;doot.sh&lt;/code&gt;) which doots
+your doot files into their respective doot folders, for better doot
+portability and easier doot setup.&lt;/p&gt;
+&lt;h2 id="but-why-arent-there-already-tools-for-that"&gt;But why? Aren't
+there already tools for that?&lt;/h2&gt;
+&lt;p&gt;I've tried a couple alternatives to manage my dotfiles and while some
+of them are better than others, none of them really behaved the way I
+need. Some close calls over the years have been:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;I used &lt;a
+href="https://github.com/anishathalye/dotbot"&gt;dotbot&lt;/a&gt; for some time,
+but between its dependency on Python, and having to maintain a YAML file
+which essentially just mirrored the folder structure already present in
+the files, I started disliking it.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://www.gnu.org/software/stow/"&gt;GNU stow&lt;/a&gt; stores
+dotfiles in 'packages' which you'll need to get your head around, and
+symlinks folders, which becomes an issue when you have to use
+applications that don't respect the &lt;a
+href="https://specifications.freedesktop.org/basedir-spec/latest/ar01s02.html"&gt;XDG
+Base Directory Specification&lt;/a&gt;, since these will fill up your
+otherwise neatly organised dotfiles with data and cache files. Case in
+point, my &lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt; is currently sitting at around
+500MB. No, I have not written 500MB worth of config files.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I also tried using a &lt;a
+href="https://mitxela.com/projects/dotfiles_management"&gt;bare git
+repository&lt;/a&gt; for a while, but realized it was a mess because I also
+maintain some system-wide config files owned by root across multiple
+devices. That had me doing a weird dance of using git as root, which I
+can't say I found pleasant.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With the enumeration out of the way, I'd like to emphasize that all
+these are great tools in their own right and might suit your use-case
+perfectly. As with anything, make sure to test and check them out
+yourself before taking my word for it.&lt;/p&gt;
+&lt;p&gt;In any case, I sat down and wrote &lt;code&gt;doot&lt;/code&gt;. Personally, I
+blame &lt;a href="https://xkcd.com/927/"&gt;XKCD&lt;/a&gt;.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src="https://imgs.xkcd.com/comics/standards.png" alt="XKCD-927" /&gt;
+&lt;figcaption aria-hidden="true"&gt;XKCD-927&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id="how-to-doot"&gt;How to doot&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;tl;dr:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Clone the repository, add your doot files under &lt;code&gt;user&lt;/code&gt; or
+&lt;code&gt;root&lt;/code&gt;, run &lt;code&gt;./doot.sh&lt;/code&gt; and your doots will be
+copied/linked to their places. For the adventurous, there are also some
+settings at the top of the script.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ts;mt (too short; more text):&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;p&gt;Clone &lt;code&gt;doot&lt;/code&gt; to where you'd like to keep track of your
+doots (optionally, fork it first, for easier VCS later). For
+instance,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://codeberg.org/cyberme0w/doot ~/.doot`&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Understand the difference between user-doots and root-doots:&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;p&gt;user-doots are owned by the non-root user, and are placed in
+&lt;code&gt;~/.doot/user&lt;/code&gt;, which maps to the user's &lt;code&gt;$HOME&lt;/code&gt;.
+E.g. &lt;code&gt;~/.doot/user/.config/mutt/muttrc&lt;/code&gt; maps to
+&lt;code&gt;$HOME/.config/mutt/muttrc&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;root-doots are owned by root, and are placed in
+&lt;code&gt;~/.doot/root&lt;/code&gt;, which maps to &lt;code&gt;/&lt;/code&gt;. E.g.
+&lt;code&gt;~/.doot/root/etc/default/grub&lt;/code&gt; maps to
+&lt;code&gt;/etc/default/grub&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Copy your configuration files into their respective
+&lt;code&gt;~/.doot/&lt;/code&gt; folders and optionally track them with VCS (a fork
+of the repo works just fine).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Double check the doot settings in the first lines of
+&lt;code&gt;~/.doot/doot.sh&lt;/code&gt;. These are pretty self explanatory, but for
+completeness sake:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ASK_BEFORE_REM&lt;/code&gt;: prompt user before removing files (Can
+be &lt;code&gt;true&lt;/code&gt;/&lt;code&gt;false&lt;/code&gt;. Default &lt;code&gt;true&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ASK_BEFORE_ADD&lt;/code&gt;: prompt user before adding files or
+folders (Can be &lt;code&gt;true&lt;/code&gt;/&lt;code&gt;false&lt;/code&gt;. Default
+&lt;code&gt;false&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ADD_MODE&lt;/code&gt;: how to add doots to your system (Can be
+&lt;code&gt;copy&lt;/code&gt;/&lt;code&gt;link&lt;/code&gt; to use &lt;code&gt;cp&lt;/code&gt; or
+&lt;code&gt;ln -sf&lt;/code&gt; respectively. Default: &lt;code&gt;link&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;USER_PATH&lt;/code&gt;: the path to the user-doots inside
+&lt;code&gt;~/.doot&lt;/code&gt; (Can be any path. Default: &lt;code&gt;user&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ROOT_PATH&lt;/code&gt;: the path to the root-doots inside
+&lt;code&gt;~/.doot&lt;/code&gt; (Can be any path. Default: &lt;code&gt;root&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ROOT_WITH_DOAS&lt;/code&gt;: some people prefer to use
+&lt;code&gt;doas&lt;/code&gt; instead of &lt;code&gt;sudo&lt;/code&gt; to get an elevated shell
+(Can be &lt;code&gt;true&lt;/code&gt;/&lt;code&gt;false&lt;/code&gt;. Default:
+&lt;code&gt;false&lt;/code&gt;. Requires &lt;code&gt;doas&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RM_CMD&lt;/code&gt;: how to delete files (Can be any command that
+removes files. Default: &lt;code&gt;rm -f&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Run &lt;code&gt;doot.sh&lt;/code&gt; from within the dots folder and your
+files will be deployed.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+      </description>
+    </item>
+    <item>
+      <title>dudencli/cliberam - online dictionaries from your terminal</title>
+      <link>https://cyberme0w.dev/blog/dudencli-priberam.html</link>
+      <guid>https://cyberme0w.dev/blog/dudencli-priberam.html</guid>
+      <pubDate>Sun, 30 Jun 2024 01:00:00 +0200</pubDate>
+      <description>
+&lt;h1
+id="dudenclicliberam---online-dictionaries-from-your-terminal"&gt;dudencli/cliberam
+- online dictionaries from your terminal&lt;/h1&gt;
+&lt;p&gt;Recently I've been having issues remembering certain words in German
+and Portuguese, as I don't necessarily use them on a daily basis. My
+solution to this problem until now has essentially been:&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;try to remember&lt;/li&gt;
+&lt;li&gt;struggle&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;mentally spiral down, feeling like I am loosing any semblance
+of language-based identity, as well as regret for not using my
+mother-tongues more often&lt;/del&gt;&lt;/li&gt;
+&lt;li&gt;look up the word in an online dictionary&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;At some point, having to open a browser, then enter the dictionary's
+name, then enter the search term, then wait for the page to load, etc,
+became a bit tedious. So I wrote two short scripts (one for each
+language) that do all of that for me, then spit out the data I am
+looking for. Of course, there are also offline dictionaries for this
+kind of thing, but then I wouldn't have a reason to write another post
+here.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dudencli&lt;/code&gt; scrapes &lt;a
+href="https://duden.de/rechtschreibung"
+class="uri"&gt;https://duden.de/rechtschreibung&lt;/a&gt;, the online version of
+the classic Duden dictionaries. This is specially useful to me, because
+I sometimes forget what gender some less-common words have, as well as
+their correct spelling. The website also provides some other useful data
+that I don't really use, such as synonyms, etymology, and grammatical
+notes. Below you can see a short comparison of both the online
+dictionary as well as &lt;code&gt;dudencli&lt;/code&gt;'s output:&lt;/p&gt;
+&lt;center&gt;
+&lt;figure&gt;
+&lt;img src="/media/dudencli-test-online.png"
+alt="Duden Online&#39;s results for the search term &#39;Test&#39;" /&gt;
+&lt;figcaption aria-hidden="true"&gt;Duden Online's results for the search
+term 'Test'&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src="/media/dudencli-test-cli.png"
+alt="dudencli&#39;s results for the search term &#39;Test&#39;" /&gt;
+&lt;figcaption aria-hidden="true"&gt;&lt;code&gt;dudencli&lt;/code&gt;'s results for the
+search term 'Test'&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;Similarly, &lt;code&gt;cliberam&lt;/code&gt; uses &lt;a
+href="https://dicionario.priberam.org/"
+class="uri"&gt;https://dicionario.priberam.org/&lt;/a&gt;, a high quality
+portuguese online dictionary. One thing I would still like to add would
+be an option to fetch the conjugations if available. But until then,
+this is what the script returns:&lt;/p&gt;
+&lt;center&gt;
+&lt;figure&gt;
+&lt;img src="/media/cliberam-esparguete-online.png"
+alt="Priberam&#39;s results for the search term &#39;esparguete&#39;" /&gt;
+&lt;figcaption aria-hidden="true"&gt;Priberam's results for the search term
+'esparguete'&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src="/media/cliberam-esparguete-cli.png"
+alt="cliberam&#39;s results for the search term &#39;esparguete&#39;" /&gt;
+&lt;figcaption aria-hidden="true"&gt;&lt;code&gt;cliberam&lt;/code&gt;'s results for the
+search term 'esparguete'&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;This goes without saying, but none of this is sanctioned by either
+Duden or Priberam, so while I hope they can see it for what it is - a
+project intended to make using their services easier and more
+accessible, motivated by a student's passion for scripting - I am at the
+mercy of their lawyers.&lt;/p&gt;
+&lt;p&gt;Please don't sue me (-‿-")&lt;/p&gt;
+&lt;p&gt;As usual, the scripts are available on codeberg (&lt;a
+href="https://codeberg.org/cyberme0w/dudencli"&gt;dudencli&lt;/a&gt;, &lt;a
+href="https://codeberg.org/cyberme0w/cliberam"&gt;cliberam&lt;/a&gt;) under
+GPLv3, so feel free to steal them (terms and conditions apply).&lt;/p&gt;
+      </description>
+    </item>
+    <item>
+      <title>OpenBike</title>
+      <link>https://cyberme0w.dev/blog/openbike.html</link>
+      <guid>https://cyberme0w.dev/blog/openbike.html</guid>
+      <pubDate>Tue, 15 Aug 2023 01:00:00 +0200</pubDate>
+      <description>
+&lt;h1 id="openbike"&gt;OpenBike&lt;/h1&gt;
+&lt;p&gt;For the uninitiated, &lt;a href="https://nextbike.net"&gt;nextbike&lt;/a&gt; is a
+bike-sharing company. Clients pay a subscription fee and are allowed to
+rent bikes from multiple stations, with some cities also offering
+'floating' bikes, which can be rented and returned anywhere within given
+areas.&lt;/p&gt;
+&lt;p&gt;I myself have been a &lt;em&gt;mostly happy&lt;/em&gt; customer of nextbike for
+some time now. In my case, not having to deal with maintenance, as well
+as not using up precious space in my small apartment are great benefits.
+It also allows me to go somewhere by foot and then come back by bike or
+vice-versa, which is rather convenient.&lt;/p&gt;
+&lt;p&gt;I say &lt;em&gt;mostly happy&lt;/em&gt;, because while I am happy with the actual
+service, their mobile (Android) app is another story. Briefly pointing
+out what has been bothering me in no particular order:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The application is closed source (&lt;em&gt;boo!&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;The landing screen seems poorly optimized: a zoomed-out map loads an
+indecent number of bike markers, which cause the entire app to crawl to
+a halt on older hardware&lt;/li&gt;
+&lt;li&gt;The map is filled with e-scooters even though these are not
+available for rent via the app (basically free ads for Tier, who &lt;a
+href="https://web.archive.org/web/20221209215725/https://www.reuters.com/business/autos-transportation/e-scooter-firm-tier-buys-nextbike-bid-expand-offerings-2021-11-15/"&gt;recently
+acquired nextbike&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;While it's possible to filter out e-scooters, &lt;em&gt;you have to do
+that every single time you open the app&lt;/em&gt;, after waiting for the app
+to stop lagging&lt;/li&gt;
+&lt;li&gt;There is no way to mark stations as favorite. Sometimes, all I want
+is to be able to quickly check if one of my regular stations has a bike
+available.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So - what now?&lt;/p&gt;
+&lt;p&gt;After a bit of research, I found an alternative client called &lt;a
+href="https://f-droid.org/packages/com.example.hochi.nextcompanion/"&gt;NextCompanion&lt;/a&gt;
+by &lt;a href="https://github.com/cybre-finn/"&gt;cybre-finn&lt;/a&gt;. They took
+some time to reverse engineer nextbike's API and published &lt;a
+href="https://github.com/cybre-finn/nextbike-api-reverse-engineering"&gt;their
+results&lt;/a&gt; (&lt;em&gt;thanks!&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;NextCompanion calls itself a &lt;em&gt;"minimalistic client for
+NextBike"&lt;/em&gt; and well... it is. With it, you can type out a bike's
+number to rent it, and get an overview of your rented bikes - that's
+all. While I'm sure people on the far left end of the minimalism/bloat
+spectrum will be overjoyed using it, I would prefer to have one or two
+more features.&lt;/p&gt;
+&lt;p&gt;Another thing I stumbled upon during my research, was the &lt;em&gt;actual
+publicly available API documentation&lt;/em&gt;... so with that, and inspired
+by the simplicity of NextCompanion, I decided I'd write my own app with
+the following features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;QR-Code scanner to replace manually having to input the bike's
+ID&lt;/li&gt;
+&lt;li&gt;Re-triggering an unlock, since sometimes locks get stuck&lt;/li&gt;
+&lt;li&gt;Pausing/resuming rentals&lt;/li&gt;
+&lt;li&gt;Overview of favorite stations and their bike counts&lt;/li&gt;
+&lt;li&gt;Locally stored rental history (to calculate some statistics)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The result is exactly what I want from a mobile application - simple
+and functional:&lt;/p&gt;
+&lt;div style="display: flex;"&gt;
+&lt;img src="/media/open-bike-001-main.png" alt="Preview of the main window of my Android app 'OpenBike'" width="33%"&gt;&lt;img src="/media/open-bike-002-qr-scanner.png" alt="Preview of the QR code scanner window of my Android app 'OpenBike'" width="33%"&gt;&lt;img src="/media/open-bike-003-details.png" alt="Preview of the rental details window of my Android app 'OpenBike'" width="33%"&gt;
+&lt;/div&gt;
+&lt;p&gt;Clicking on the (+) icon opens up the QR code scanner, allowing you
+to quickly scan a bike. Current rentals are displayed on the main
+screen, and you can add certain stations to your 'bookmarks', by
+clicking on a rental and clicking 'bookmark starting station'.&lt;/p&gt;
+&lt;p&gt;The repository is now public and the first version should pop up in
+&lt;a
+href="https://f-droid.org/en/packages/dev.cyberme0w.openbike/"&gt;F-Droid&lt;/a&gt;
+shortly. The APK is also available to download from the repository's &lt;a
+href="https://codeberg.org/cyberme0w/open-bike/releases"&gt;Releases&lt;/a&gt;
+page (although the recommended way is via F-Droid].&lt;/p&gt;
+      </description>
+    </item>
+</channel></rss>

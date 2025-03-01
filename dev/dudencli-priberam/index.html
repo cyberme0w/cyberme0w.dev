@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>dudencli/cliberam - online dictionaries from your terminal @ cyberme0w's</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="title">
+    <a href="/">cyberme0w's</a> <a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a> <span id=
+    "meow">🐾MEOW🐾</span>
+  </div>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href='/blog/'>blog</a>
+        </li>
+        <li>
+          <a href='/dev/'>dev</a>
+        </li>
+        <li>
+          <a href='/about/'>about</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <h1 id="dudenclicliberam---online-dictionaries-from-your-terminal">dudencli/cliberam - online dictionaries from your
+  terminal</h1>
+  <p>Recently I’ve been having issues remembering certain words in German and Portuguese, as I don’t necessarily use
+  them on a daily basis. My solution to this problem until now has essentially been:</p>
+  <ol type="1">
+    <li>try to remember</li>
+    <li>struggle</li>
+    <li>
+      <del>mentally spiral down, feeling like I am loosing any semblance of language-based identity, as well as regret
+      for not using my mother-tongues more often</del>
+    </li>
+    <li>look up the word in an online dictionary</li>
+  </ol>
+  <p>At some point, having to open a browser, then enter the dictionary’s name, then enter the search term, then wait
+  for the page to load, etc, became a bit tedious. So I wrote two short scripts (one for each language) that do all of
+  that for me, then spit out the data I am looking for. Of course, there are also offline dictionaries for this kind of
+  thing, but then I wouldn’t have a reason to write another post here.</p>
+  <p><code>dudencli</code> scrapes <a href="https://duden.de/rechtschreibung" class=
+  "uri">https://duden.de/rechtschreibung</a>, the online version of the classic Duden dictionaries. This is specially
+  useful to me, because I sometimes forget what gender some less-common words have, as well as their correct spelling.
+  The website also provides some other useful data that I don’t really use, such as synonyms, etymology, and
+  grammatical notes. Below you can see a short comparison of both the online dictionary as well as
+  <code>dudencli</code>’s output:</p>
+  <center>
+    <figure>
+      <img src="/media/dudencli-test-online.png" alt="Duden Online’s results for the search term ‘Test’">
+      <figcaption aria-hidden="true">
+        Duden Online’s results for the search term ‘Test’
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="/media/dudencli-test-cli.png" alt="dudencli‘s results for the search term ’Test’">
+      <figcaption aria-hidden="true">
+        <code>dudencli</code>‘s results for the search term ’Test’
+      </figcaption>
+    </figure>
+  </center>
+  <p>Similarly, <code>cliberam</code> uses <a href="https://dicionario.priberam.org/" class=
+  "uri">https://dicionario.priberam.org/</a>, a high quality portuguese online dictionary. One thing I would still like
+  to add would be an option to fetch the conjugations if available. But until then, this is what the script
+  returns:</p>
+  <center>
+    <figure>
+      <img src="/media/cliberam-esparguete-online.png" alt="Priberam’s results for the search term ‘esparguete’">
+      <figcaption aria-hidden="true">
+        Priberam’s results for the search term ‘esparguete’
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="/media/cliberam-esparguete-cli.png" alt="cliberam‘s results for the search term ’esparguete’">
+      <figcaption aria-hidden="true">
+        <code>cliberam</code>‘s results for the search term ’esparguete’
+      </figcaption>
+    </figure>
+  </center>
+  <p>This goes without saying, but none of this is sanctioned by either Duden or Priberam, so while I hope they can see
+  it for what it is - a project intended to make using their services easier and more accessible, motivated by a
+  student’s passion for scripting - I am at the mercy of their lawyers.</p>
+  <p>Please don’t sue me (-‿-“)</p>
+  <p>As usual, the scripts are available on codeberg (<a href="https://codeberg.org/cyberme0w/dudencli">dudencli</a>,
+  <a href="https://codeberg.org/cyberme0w/cliberam">cliberam</a>) under GPLv3, so feel free to steal them (terms and
+  conditions apply).</p>
+  <hr>
+  <footer>
+    cyberme0w.dev © 2024 - <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA
+    4.0</a>
+  </footer>
+</body>
+</html>

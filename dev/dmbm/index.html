@@ -1,50 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <title>cyberme0w&#39;s | dmbm</title>
-  </head>
-
-  <body>
-    <div id="title">cyberme0w&#39;s<a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a>
-      <span id="meow">🐾MEOW🐾</span>
-    </div>
-    <header>
-      <ul class="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/dev/">Dev</a></li>
-        <li><a href="/contact/">Contact</a></li>
+<head>
+  <meta charset="utf-8">
+  <title>dmbm - browser-agnostic bookmarking @ cyberme0w's</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="title">
+    <a href="/">cyberme0w's</a> <a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a> <span id=
+    "meow">🐾MEOW🐾</span>
+  </div>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href='/blog/'>blog</a>
+        </li>
+        <li>
+          <a href='/dev/'>dev</a>
+        </li>
+        <li>
+          <a href='/about/'>about</a>
+        </li>
       </ul>
-    </header>
-
-    <div id="content">
-<p>Repository: <a href="https://codeberg.org/cyberme0w/dmbm">https://codeberg.org/cyberme0w/dmbm</a></p>
-<hr>
-<p><strong>dmbm</strong> is a bookmarking extension for
-<a href="https://tools.suckless.org/dmenu/">dmenu</a>, a launcher for tiling window
-managers such as <a href="https://i3wm.org/"><code>i3</code></a> or
-<a href="https://dwm.suckless.org/"><code>dwm</code></a>.</p>
-<p>Since it is not bound to any specific browser and instead uses <code>xdotool</code>, you
-can use it across multiple browsers, as well as any other program that accepts
-cursor input. <em>This also makes it a viable copy-pasta board!</em></p>
-<p>It is written in bash, which makes it easily extensible, and stores bookmarks
-in plain text, within a folder-hierarchy.</p>
-<h2 id="preview">Preview</h2>
-<p>Open bookmarks in your browser with xdg-open:</p>
-<p><img src="./open-bookmark.gif" alt="Open bookmarks in your browser with xdg-open"></p>
-<p>Write bookmarked data to your cursor with xdotool</p>
-<p><img src="./write-to-cursor.gif" alt="Write bookmarked data to your cursor with xdotool"></p>
-
-</div>
-<hr>
+    </nav>
+  </header>
+  <h1 id="dmbm-browser-agnostic-bookmarking"><code>dmbm</code>: Browser-agnostic bookmarking</h1>
+  <p>(Repository: <a href="https://codeberg.org/cyberme0w/dmbm" class=
+  "uri">https://codeberg.org/cyberme0w/dmbm</a>)</p>
+  <p><code>dmbm</code> is a bookmarking extension for <a href="https://tools.suckless.org/dmenu/">dmenu</a>, a launcher
+  for tiling window managers such as <a href="https://i3wm.org">i3</a> or <a href=
+  "https://dwm.suckless.com">dwm</a>.</p>
+  <p>It is not bound to any browser and uses <code>xdotool</code>, meaning you can use it across multiple browsers, as
+  well as any other program that accepts cursor input. It also works well enough as a copy-pasta board.</p>
+  <p>It is written in <code>bash</code>, which makes it easy to extend, and stores bookmarks in plain text files within
+  the bookmarks’ folder-hierarchy.</p>
+  <h2 id="preview">Preview</h2>
+  <figure>
+    <img src="/media/dmbm-preview-browser.gif" alt="Preview opening bookmarks in the browser with dmbm">
+    <figcaption aria-hidden="true">
+      Preview opening bookmarks in the browser with <code>dmbm</code>
+    </figcaption>
+  </figure>
+  <figure>
+    <img src="/media/dmbm-preview-cursor.gif" alt="Preview writing bookmarked data to the cursor with xdotool">
+    <figcaption aria-hidden="true">
+      Preview writing bookmarked data to the cursor with <code>xdotool</code>
+    </figcaption>
+  </figure>
+  <hr>
   <footer>
-    <p>cyberme0w.dev © 2024 -
-      <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"
-         target="_blank" rel="license noopener noreferrer">CC BY-NC-SA 4.0</a>
-    </p>
+    cyberme0w.dev © 2024 - <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA
+    4.0</a>
   </footer>
-
-  </body>
+</body>
 </html>

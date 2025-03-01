@@ -1,132 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <title>cyberme0w&#39;s | doot</title>
-  </head>
-
-  <body>
-    <div id="title">cyberme0w&#39;s<a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a>
-      <span id="meow">🐾MEOW🐾</span>
-    </div>
-    <header>
-      <ul class="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/dev/">Dev</a></li>
-        <li><a href="/contact/">Contact</a></li>
+<head>
+  <meta charset="utf-8">
+  <title>doot @ cyberme0w's</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="title">
+    <a href="/">cyberme0w's</a> <a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a> <span id=
+    "meow">🐾MEOW🐾</span>
+  </div>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href='/blog/'>blog</a>
+        </li>
+        <li>
+          <a href='/dev/'>dev</a>
+        </li>
+        <li>
+          <a href='/about/'>about</a>
+        </li>
       </ul>
-    </header>
-
-    <div id="content">
-<h1 id="doot-">doot 📯</h1>
-<hr>
-<p>Repository: <a href="https://codeberg.org/cyberme0w/doot">https://codeberg.org/cyberme0w/doot</a></p>
-<hr>
-<p><code>doot</code> is a bash script (<code>doot.sh</code>) which doots your doot files into their
-respective doot folders, for better doot portability and easier doot setup.</p>
-<h2 id="but-why-arent-there-already-tools-for-that">But why? Aren&rsquo;t there already tools for that?</h2>
-<p>I&rsquo;ve tried a couple alternatives to manage my dotfiles and while some of them
-are better than others, none of them really behaved the way I need. Some close
-calls over the years have been:</p>
-<ul>
-<li>
-<p>I used <a href="https://github.com/anishathalye/dotbot">dotbot</a> for some time, but
-between its dependency on Python, and having to maintain a YAML file which
-essentially just mirrored the folder structure already present in the files,
-I started disliking it.</p>
-</li>
-<li>
-<p><a href="https://www.gnu.org/software/stow/">GNU stow</a> stores dotfiles in &lsquo;packages&rsquo;
-which you&rsquo;ll need to get your head around, and symlinks folders, which
-becomes an issue when you have to use applications that don&rsquo;t respect the
-<a href="https://specifications.freedesktop.org/basedir-spec/latest/ar01s02.html">XDG Base Directory
-Specification</a>,
-since these will fill up your otherwise neatly organised dotfiles with data
-and cache files. Case in point, my <code>$XDG_CONFIG_HOME</code> is currently sitting at
-around 500MB. No, I have not written 500MB worth of config files.</p>
-</li>
-<li>
-<p>I also tried using a <a href="https://mitxela.com/projects/dotfiles_management">bare git
-repository</a> for a while,
-but realized it was a mess because I also maintain some system-wide config
-files owned by root across multiple devices. That had me doing a weird dance
-of using git as root, which I can&rsquo;t say I found pleasant.</p>
-</li>
-</ul>
-<p>With the enumeration out of the way, I&rsquo;d like to emphasize that all these are
-great tools in their own right and might suit your use-case perfectly. As with
-anything, make sure to test and check them out yourself before taking my word
-for it.</p>
-<p>In any case, I sat down and wrote <code>doot</code>. Personally, I blame
-<a href="https://xkcd.com/927/">XKCD</a>.</p>
-<p><img src="https://imgs.xkcd.com/comics/standards.png" alt="XKCD-927"></p>
-<h2 id="how-to-doot">How to doot</h2>
-<p><strong>tl;dr:</strong></p>
-<p>Clone the repository, add your doot files under <code>user</code> or <code>root</code>, run
-<code>./doot.sh</code> and your doots will be copied/linked to their places. For the
-adventurous, there are also some settings at the top of the script.</p>
-<p><strong>ts;mt (too short; more text):</strong></p>
-<ol>
-<li>
-<p>Clone <code>doot</code> to where you&rsquo;d like to keep track of your doots (optionally,
-fork it first, for easier VCS later). For instance,</p>
-<pre tabindex="0"><code>git clone https://codeberg.org/cyberme0w/doot ~/.doot`
-</code></pre></li>
-<li>
-<p>Understand the difference between user-doots and root-doots:</p>
-<ol>
-<li>
-<p>user-doots are owned by the non-root user, and are placed in
-<code>~/.doot/user</code>, which maps to the user&rsquo;s <code>$HOME</code>. E.g.
-<code>~/.doot/user/.config/mutt/muttrc</code> maps to <code>$HOME/.config/mutt/muttrc</code></p>
-</li>
-<li>
-<p>root-doots are owned by root, and are placed in <code>~/.doot/root</code>, which
-maps to <code>/</code>. E.g. <code>~/.doot/root/etc/default/grub</code> maps to
-<code>/etc/default/grub</code>.</p>
-</li>
-</ol>
-</li>
-<li>
-<p>Copy your configuration files into their respective <code>~/.doot/</code> folders and
-optionally track them with VCS (a fork of the repo works just fine).</p>
-</li>
-<li>
-<p>Double check the doot settings in the first lines of <code>~/.doot/doot.sh</code>.
-These are pretty self explanatory, but for completeness sake:</p>
-<ul>
-<li><code>ASK_BEFORE_REM</code>: prompt user before removing files (Can be
-<code>true</code>/<code>false</code>. Default <code>true</code>)</li>
-<li><code>ASK_BEFORE_ADD</code>: prompt user before adding files or folders (Can be
-<code>true</code>/<code>false</code>. Default <code>false</code>)</li>
-<li><code>ADD_MODE</code>: how to add doots to your system (Can be <code>copy</code>/<code>link</code> to use
-<code>cp</code> or <code>ln -sf</code> respectively. Default: <code>link</code>)</li>
-<li><code>USER_PATH</code>: the path to the user-doots inside <code>~/.doot</code> (Can be any path.
-Default: <code>user</code>)</li>
-<li><code>ROOT_PATH</code>: the path to the root-doots inside <code>~/.doot</code> (Can be any path.
-Default: <code>root</code>)</li>
-<li><code>ROOT_WITH_DOAS</code>: some people prefer to use <code>doas</code> instead of <code>sudo</code> to
-get an elevated shell (Can be <code>true</code>/<code>false</code>. Default: <code>false</code>. Requires
-<code>doas</code>)</li>
-<li><code>RM_CMD</code>: how to delete files (Can be any command that removes files.
-Default: <code>rm -f</code>)</li>
-</ul>
-</li>
-<li>
-<p>Run <code>doot.sh</code> from within the dots folder and your files will be deployed.</p>
-</li>
-</ol>
-
-</div>
-<hr>
+    </nav>
+  </header>
+  <h1 id="doot">doot 📯</h1>
+  <p><code>doot</code> is a bash script (<code>doot.sh</code>) which doots your doot files into their respective doot
+  folders, for better doot portability and easier doot setup.</p>
+  <h2 id="but-why-arent-there-already-tools-for-that">But why? Aren’t there already tools for that?</h2>
+  <p>I’ve tried a couple alternatives to manage my dotfiles and while some of them are better than others, none of them
+  really behaved the way I need. Some close calls over the years have been:</p>
+  <ul>
+    <li>
+      <p>I used <a href="https://github.com/anishathalye/dotbot">dotbot</a> for some time, but between its dependency
+      on Python, and having to maintain a YAML file which essentially just mirrored the folder structure already
+      present in the files, I started disliking it.</p>
+    </li>
+    <li>
+      <p><a href="https://www.gnu.org/software/stow/">GNU stow</a> stores dotfiles in ‘packages’ which you’ll need to
+      get your head around, and symlinks folders, which becomes an issue when you have to use applications that don’t
+      respect the <a href="https://specifications.freedesktop.org/basedir-spec/latest/ar01s02.html">XDG Base Directory
+      Specification</a>, since these will fill up your otherwise neatly organised dotfiles with data and cache files.
+      Case in point, my <code>$XDG_CONFIG_HOME</code> is currently sitting at around 500MB. No, I have not written
+      500MB worth of config files.</p>
+    </li>
+    <li>
+      <p>I also tried using a <a href="https://mitxela.com/projects/dotfiles_management">bare git repository</a> for a
+      while, but realized it was a mess because I also maintain some system-wide config files owned by root across
+      multiple devices. That had me doing a weird dance of using git as root, which I can’t say I found pleasant.</p>
+    </li>
+  </ul>
+  <p>With the enumeration out of the way, I’d like to emphasize that all these are great tools in their own right and
+  might suit your use-case perfectly. As with anything, make sure to test and check them out yourself before taking my
+  word for it.</p>
+  <p>In any case, I sat down and wrote <code>doot</code>. Personally, I blame <a href=
+  "https://xkcd.com/927/">XKCD</a>.</p>
+  <figure>
+    <img src="https://imgs.xkcd.com/comics/standards.png" alt="XKCD-927">
+    <figcaption aria-hidden="true">
+      XKCD-927
+    </figcaption>
+  </figure>
+  <h2 id="how-to-doot">How to doot</h2>
+  <p><strong>tl;dr:</strong></p>
+  <p>Clone the repository, add your doot files under <code>user</code> or <code>root</code>, run <code>./doot.sh</code>
+  and your doots will be copied/linked to their places. For the adventurous, there are also some settings at the top of
+  the script.</p>
+  <p><strong>ts;mt (too short; more text):</strong></p>
+  <ol type="1">
+    <li>
+      <p>Clone <code>doot</code> to where you’d like to keep track of your doots (optionally, fork it first, for easier
+      VCS later). For instance,</p>
+      <pre><code>git clone https://codeberg.org/cyberme0w/doot ~/.doot`</code></pre>
+    </li>
+    <li>
+      <p>Understand the difference between user-doots and root-doots:</p>
+      <ol type="1">
+        <li>
+          <p>user-doots are owned by the non-root user, and are placed in <code>~/.doot/user</code>, which maps to the
+          user’s <code>$HOME</code>. E.g. <code>~/.doot/user/.config/mutt/muttrc</code> maps to
+          <code>$HOME/.config/mutt/muttrc</code></p>
+        </li>
+        <li>
+          <p>root-doots are owned by root, and are placed in <code>~/.doot/root</code>, which maps to <code>/</code>.
+          E.g. <code>~/.doot/root/etc/default/grub</code> maps to <code>/etc/default/grub</code>.</p>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <p>Copy your configuration files into their respective <code>~/.doot/</code> folders and optionally track them
+      with VCS (a fork of the repo works just fine).</p>
+    </li>
+    <li>
+      <p>Double check the doot settings in the first lines of <code>~/.doot/doot.sh</code>. These are pretty self
+      explanatory, but for completeness sake:</p>
+      <ul>
+        <li><code>ASK_BEFORE_REM</code>: prompt user before removing files (Can be
+        <code>true</code>/<code>false</code>. Default <code>true</code>)</li>
+        <li><code>ASK_BEFORE_ADD</code>: prompt user before adding files or folders (Can be
+        <code>true</code>/<code>false</code>. Default <code>false</code>)</li>
+        <li><code>ADD_MODE</code>: how to add doots to your system (Can be <code>copy</code>/<code>link</code> to use
+        <code>cp</code> or <code>ln -sf</code> respectively. Default: <code>link</code>)</li>
+        <li><code>USER_PATH</code>: the path to the user-doots inside <code>~/.doot</code> (Can be any path. Default:
+        <code>user</code>)</li>
+        <li><code>ROOT_PATH</code>: the path to the root-doots inside <code>~/.doot</code> (Can be any path. Default:
+        <code>root</code>)</li>
+        <li><code>ROOT_WITH_DOAS</code>: some people prefer to use <code>doas</code> instead of <code>sudo</code> to
+        get an elevated shell (Can be <code>true</code>/<code>false</code>. Default: <code>false</code>. Requires
+        <code>doas</code>)</li>
+        <li><code>RM_CMD</code>: how to delete files (Can be any command that removes files. Default: <code>rm
+        -f</code>)</li>
+      </ul>
+    </li>
+    <li>
+      <p>Run <code>doot.sh</code> from within the dots folder and your files will be deployed.</p>
+    </li>
+  </ol>
+  <hr>
   <footer>
-    <p>cyberme0w.dev © 2024 -
-      <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"
-         target="_blank" rel="license noopener noreferrer">CC BY-NC-SA 4.0</a>
-    </p>
+    cyberme0w.dev © 2024 - <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA
+    4.0</a>
   </footer>
-
-  </body>
+</body>
 </html>
