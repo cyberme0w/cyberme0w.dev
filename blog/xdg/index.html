@@ -31,8 +31,8 @@
   <pre><code>ls -A | wc -l</code></pre>
   <p>That’s the number of files, folders and other tidbits that have been placed in your <code>$HOME</code> (with
   <em>or without</em> your blessing). Can you justify that number? Do you even know what is going on there? Personally,
-  I like to keep my home as clean as possible, so let’s take a look and try to do a little spring cleaning.</p>
-  <h2 id="a-brief-background-on-xdg">a brief background on XDG</h2>
+  I like to keep my home as clean as possible, so let’s take a look and try to do a little spring-cleaning.</p>
+  <h2 id="a-brief-background-on-xdg">A brief background on XDG</h2>
   <p><code>XDG</code> or “Cross Desktop Group” (previously known as <a href=
   "https://en.wikipedia.org/wiki/Freedesktop.org">X Desktop Group</a>) is an ongoing project with the goal of improving
   UNIX-like operating systems’ interoperability. They have a multitude of software projects and specifications which
@@ -92,13 +92,13 @@
   sends bees over TCP/IP to a conveniently preexisting <code>beehive</code>, keeps a record of how many bees were sent
   in a single bee-sending session, as well as the total number of bees sent. It also keeps a log of your activity per
   session.</p>
-  <p>It <code>send-bees</code> respects the <code>basedir</code>, it will behave something like this:</p>
+  <p>If <code>send-bees</code> respects the <code>basedir</code>, it will behave something like this:</p>
   <ul>
-    <li>look for the config file with the default ammount of bees to send, <code>beehive</code> address, log policy,
+    <li>Look for the config file with the default amount of bees to send, <code>beehive</code> address, log policy,
     etc. under <code>$XDG_CONFIG_HOME/send-bees/config</code> (The file name itself is not specified, so anything goes
     here, e.g.&nbsp;<code>send-bees.config</code>).</li>
-    <li>store the total quantity of bees sent in <code>$XDG_STATE_HOME/send-bees/current</code>.</li>
-    <li>open a socket under <code>$XDG_RUNTIME_DIR/send-bees/beehive-socket</code> (once again, file names don’t matter
+    <li>Store the total quantity of bees sent in <code>$XDG_STATE_HOME/send-bees/current</code>.</li>
+    <li>Open a socket under <code>$XDG_RUNTIME_DIR/send-bees/beehive-socket</code> (once again, file names don’t matter
     - folders do)</li>
     <li>cache any bees sent during the current session in <code>$XDG_CACHE_HOME/send-bees/session</code>, which later
     may get dumped to the total bees file</li>
@@ -119,13 +119,13 @@
   </ul>
   <p>What our application should most definitely <em>not do</em>, is to automatically create the
   <code>$HOME/.send-bees/</code> directory and dump everything in there, or perhaps even more perplexing, use
-  <code>$XDG_CONFIG_HOME</code>, implying it complies with basedir, but then <em>dump everything, including cache,
-  state, runtime files, etc. into it</em> and call it a day, effectively rendering any kind of version controlling
-  ineffective.</p>
+  <code>$XDG_CONFIG_HOME</code>, implying it complies with <code>basedir</code>, but then <em>dump everything,
+  including cache, state, runtime files, etc. into it</em> and call it a day, effectively rendering any kind of version
+  controlling ineffective.</p>
   <p>Unfortunately, most applications do not follow <code>basedir</code>, or require setting some environment variables
   to look in the right places:</p>
   <ul>
-    <li>Firefox, as well as any forks (e.g.&nbsp;Librewolf) insist on creating <code>~/.mozilla/</code></li>
+    <li>Firefox, as well as any forks (e.g.&nbsp;LibreWolf) insist on creating <code>~/.mozilla/</code></li>
     <li>Thunderbird behaves similarly to Firefox</li>
     <li>Android Studio claims <code>~/.android</code>, even though it allows you to configure what folders it should
     look in</li>
@@ -134,14 +134,14 @@
     <code>$XDG_CONFIG_HOME/app/</code></li>
   </ul>
   <p>… <a href="https://wiki.archlinux.org/title/XDG_Base_Directory#Hardcoded">and the list goes on</a>.</p>
-  <p>Many of these have have a workaround, but that’s usually it - a hack. Meaning, every time I install a new piece of
+  <p>Many of these have a workaround, but that’s usually it - a hack. Meaning, every time I install a new piece of
   software, I have to look up if it will fill my <code>~/.config</code> with junk.</p>
-  <p>There are tools like <a href="https://github.com/b3nj5m1n/xdg-ninja">xdg-ninja</a> which can help in cleaning up,
-  but it would be great if more applications simply respected the spec.</p>
+  <p>There are tools like <a href="https://github.com/b3nj5m1n/xdg-ninja"><code>xdg-ninja</code></a> which can help in
+  cleaning up, but it would be great if more applications simply respected the spec.</p>
   <p>*sigh*</p>
   <hr>
   <footer>
-    cyberme0w.dev © 2024 - <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA
+    cyberme0w.dev © 2025 - <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA
     4.0</a>
   </footer>
 </body>

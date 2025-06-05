@@ -5,8 +5,8 @@
     <link>https://cyberme0w.dev</link>
     <description></description>
     <language>en-us</language>
-    <pubDate>Tue, 18 Mar 2025 11:00:11 +0100</pubDate>
-    <lastBuildDate>2025-03-18T11:00:11Z</lastBuildDate>
+    <pubDate>Thu, 05 Jun 2025 16:18:07 +0200</pubDate>
+    <lastBuildDate>2025-06-05T16:18:07Z</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link xmlns:atom='http://www.w3.org/2005/Atom' href='https://cyberme0w.dev/feed.xml' rel='self' type='application/rss+xml'/>
     <item>
@@ -23,8 +23,8 @@ or the overwhelming lack thereof&lt;/h1&gt;
 placed in your &lt;code&gt;$HOME&lt;/code&gt; (with &lt;em&gt;or without&lt;/em&gt; your
 blessing). Can you justify that number? Do you even know what is going
 on there? Personally, I like to keep my home as clean as possible, so
-let’s take a look and try to do a little spring cleaning.&lt;/p&gt;
-&lt;h2 id="a-brief-background-on-xdg"&gt;a brief background on XDG&lt;/h2&gt;
+let’s take a look and try to do a little spring-cleaning.&lt;/p&gt;
+&lt;h2 id="a-brief-background-on-xdg"&gt;A brief background on XDG&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;XDG&lt;/code&gt; or "Cross Desktop Group" (previously known as &lt;a
 href="https://en.wikipedia.org/wiki/Freedesktop.org"&gt;X Desktop
 Group&lt;/a&gt;) is an ongoing project with the goal of improving UNIX-like
@@ -94,17 +94,17 @@ a conveniently preexisting &lt;code&gt;beehive&lt;/code&gt;, keeps a record of h
 many bees were sent in a single bee-sending session, as well as the
 total number of bees sent. It also keeps a log of your activity per
 session.&lt;/p&gt;
-&lt;p&gt;It &lt;code&gt;send-bees&lt;/code&gt; respects the &lt;code&gt;basedir&lt;/code&gt;, it will
+&lt;p&gt;If &lt;code&gt;send-bees&lt;/code&gt; respects the &lt;code&gt;basedir&lt;/code&gt;, it will
 behave something like this:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;look for the config file with the default ammount of bees to send,
+&lt;li&gt;Look for the config file with the default amount of bees to send,
 &lt;code&gt;beehive&lt;/code&gt; address, log policy, etc. under
 &lt;code&gt;$XDG_CONFIG_HOME/send-bees/config&lt;/code&gt; (The file name itself is
 not specified, so anything goes here, e.g.
 &lt;code&gt;send-bees.config&lt;/code&gt;).&lt;/li&gt;
-&lt;li&gt;store the total quantity of bees sent in
+&lt;li&gt;Store the total quantity of bees sent in
 &lt;code&gt;$XDG_STATE_HOME/send-bees/current&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;open a socket under
+&lt;li&gt;Open a socket under
 &lt;code&gt;$XDG_RUNTIME_DIR/send-bees/beehive-socket&lt;/code&gt; (once again, file
 names don't matter - folders do)&lt;/li&gt;
 &lt;li&gt;cache any bees sent during the current session in
@@ -133,15 +133,15 @@ href="https://wiki.archlinux.org/title/Tmpfs"&gt;&lt;code&gt;tmpfs&lt;/code&gt;&
 &lt;p&gt;What our application should most definitely &lt;em&gt;not do&lt;/em&gt;, is to
 automatically create the &lt;code&gt;$HOME/.send-bees/&lt;/code&gt; directory and
 dump everything in there, or perhaps even more perplexing, use
-&lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt;, implying it complies with basedir, but
-then &lt;em&gt;dump everything, including cache, state, runtime files, etc.
-into it&lt;/em&gt; and call it a day, effectively rendering any kind of
-version controlling ineffective.&lt;/p&gt;
+&lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt;, implying it complies with
+&lt;code&gt;basedir&lt;/code&gt;, but then &lt;em&gt;dump everything, including cache,
+state, runtime files, etc. into it&lt;/em&gt; and call it a day, effectively
+rendering any kind of version controlling ineffective.&lt;/p&gt;
 &lt;p&gt;Unfortunately, most applications do not follow &lt;code&gt;basedir&lt;/code&gt;,
 or require setting some environment variables to look in the right
 places:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Firefox, as well as any forks (e.g. Librewolf) insist on creating
+&lt;li&gt;Firefox, as well as any forks (e.g. LibreWolf) insist on creating
 &lt;code&gt;~/.mozilla/&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Thunderbird behaves similarly to Firefox&lt;/li&gt;
 &lt;li&gt;Android Studio claims &lt;code&gt;~/.android&lt;/code&gt;, even though it allows
@@ -155,13 +155,13 @@ application) dumps all its files in
 &lt;p&gt;... &lt;a
 href="https://wiki.archlinux.org/title/XDG_Base_Directory#Hardcoded"&gt;and
 the list goes on&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Many of these have have a workaround, but that’s usually it - a hack.
+&lt;p&gt;Many of these have a workaround, but that’s usually it - a hack.
 Meaning, every time I install a new piece of software, I have to look up
 if it will fill my &lt;code&gt;~/.config&lt;/code&gt; with junk.&lt;/p&gt;
 &lt;p&gt;There are tools like &lt;a
-href="https://github.com/b3nj5m1n/xdg-ninja"&gt;xdg-ninja&lt;/a&gt; which can
-help in cleaning up, but it would be great if more applications simply
-respected the spec.&lt;/p&gt;
+href="https://github.com/b3nj5m1n/xdg-ninja"&gt;&lt;code&gt;xdg-ninja&lt;/code&gt;&lt;/a&gt;
+which can help in cleaning up, but it would be great if more
+applications simply respected the spec.&lt;/p&gt;
 &lt;p&gt;*sigh*&lt;/p&gt;
       </description>
     </item>
