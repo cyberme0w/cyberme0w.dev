@@ -5,8 +5,8 @@
     <link>https://cyberme0w.dev</link>
     <description></description>
     <language>en-us</language>
-    <pubDate>Thu, 05 Jun 2025 16:18:07 +0200</pubDate>
-    <lastBuildDate>2025-06-05T16:18:07Z</lastBuildDate>
+    <pubDate>Fri, 20 Feb 2026 08:41:50 +0100</pubDate>
+    <lastBuildDate>2026-02-20T08:41:50Z</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link xmlns:atom='http://www.w3.org/2005/Atom' href='https://cyberme0w.dev/feed.xml' rel='self' type='application/rss+xml'/>
     <item>
@@ -46,42 +46,42 @@ directories for the following file types:&lt;/p&gt;
 &lt;col style="width: 34%" /&gt;
 &lt;/colgroup&gt;
 &lt;thead&gt;
-&lt;tr class="header"&gt;
+&lt;tr&gt;
 &lt;th style="text-align: center;"&gt;File type&lt;/th&gt;
 &lt;th style="text-align: center;"&gt;Default value&lt;/th&gt;
 &lt;th style="text-align: center;"&gt;Environment Variable&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
-&lt;tr class="odd"&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;data files&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.local/share&lt;/code&gt;&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_DATA_HOME&lt;/code&gt; /
 &lt;code&gt;XDG_DATA_DIRS&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class="even"&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;configuration files&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.config&lt;/code&gt;&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_CONFIG_HOME&lt;/code&gt; /
 &lt;code&gt;XDG_CONFIG_DIRS&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class="odd"&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;state data&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.local/state&lt;/code&gt;&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_STATE_HOME&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class="even"&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;non-essential (cached) data&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.cache&lt;/code&gt;&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_CACHE_HOME&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class="odd"&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;runtime files and other file
 objects&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;em&gt;(no default value)&lt;/em&gt;&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;XDG_RUNTIME_DIR&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class="even"&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;executable files&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;$HOME/.local/bin&lt;/code&gt;&lt;/td&gt;
 &lt;td style="text-align: center;"&gt;&lt;em&gt;(no environment variable)&lt;/em&gt;&lt;/td&gt;
@@ -120,7 +120,7 @@ complying with the spec:&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt; contains only text files and can
 sensibly be version-controlled with git&lt;/li&gt;
 &lt;li&gt;configuring a new device to your liking is as simple as
-&lt;code&gt;cp -r   /backup/.config ~&lt;/code&gt; (or
+&lt;code&gt;cp -r /backup/.config ~&lt;/code&gt; (or
 &lt;code&gt;git clone git@host:user/config .config&lt;/code&gt; if you are
 cool)&lt;/li&gt;
 &lt;li&gt;data and state files are in an expected location, as opposed to
