@@ -5,8 +5,8 @@
     <link>https://cyberme0w.dev</link>
     <description></description>
     <language>en-us</language>
-    <pubDate>Mon, 09 Mar 2026 15:00:14 +0100</pubDate>
-    <lastBuildDate>2026-03-09T15:00:14Z</lastBuildDate>
+    <pubDate>Mon, 09 Mar 2026 17:12:35 +0100</pubDate>
+    <lastBuildDate>2026-03-09T17:12:35Z</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link xmlns:atom='http://www.w3.org/2005/Atom' href='https://cyberme0w.dev/feed.xml' rel='self' type='application/rss+xml'/>
     <item>
@@ -129,22 +129,22 @@ and all, but I travel with Deutsche Bahn&lt;/h2&gt;
 when I'm in the train without an Internet connection. For that, I wrote
 a small shell script (essentially just &lt;code&gt;yt-dlp&lt;/code&gt; with a few of
 its options set) to a file called &lt;code&gt;yt.sh&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="sourceCode" id="cb7"&gt;&lt;pre class="sourceCode sh"&gt;&lt;code class="sourceCode bash"&gt;&lt;span id="cb7-1"&gt;&lt;a href="#cb7-1" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;&lt;span class="co"&gt;#!/bin/sh&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-2"&gt;&lt;a href="#cb7-2" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id="cb7-3"&gt;&lt;a href="#cb7-3" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;&lt;span class="fu"&gt;mkdir&lt;/span&gt; &lt;span class="at"&gt;-p&lt;/span&gt; ~/vids/yt/&lt;/span&gt;
-&lt;span id="cb7-4"&gt;&lt;a href="#cb7-4" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id="cb7-5"&gt;&lt;a href="#cb7-5" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;&lt;span class="ex"&gt;yt-dlp&lt;/span&gt;                                                        &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-6"&gt;&lt;a href="#cb7-6" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--format&lt;/span&gt; &lt;span class="st"&gt;&#39;bv*[ext=mp4][height&lt;=720]+ba[ext=m4a]&#39;&lt;/span&gt;            &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-7"&gt;&lt;a href="#cb7-7" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--embed-chapters&lt;/span&gt;                                            &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-8"&gt;&lt;a href="#cb7-8" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--no-write-auto-subs&lt;/span&gt;                                        &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-9"&gt;&lt;a href="#cb7-9" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--sub-langs&lt;/span&gt; all,-live_chat                                  &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-10"&gt;&lt;a href="#cb7-10" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--embed-subs&lt;/span&gt;                                                &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-11"&gt;&lt;a href="#cb7-11" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--sub-format&lt;/span&gt; srt                                            &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-12"&gt;&lt;a href="#cb7-12" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--output&lt;/span&gt; &lt;span class="st"&gt;&quot;%(upload_date)s %(uploader)s: %(title)s.%(ext)s&quot;&lt;/span&gt;  &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-13"&gt;&lt;a href="#cb7-13" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--no-warnings&lt;/span&gt;                                               &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-14"&gt;&lt;a href="#cb7-14" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--quiet&lt;/span&gt;                                                     &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-15"&gt;&lt;a href="#cb7-15" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="at"&gt;--paths&lt;/span&gt; ~/vids/yt/                                          &lt;span class="dt"&gt;\&lt;/span&gt;&lt;/span&gt;
-&lt;span id="cb7-16"&gt;&lt;a href="#cb7-16" aria-hidden="true" tabindex="-1"&gt;&lt;/a&gt;  &lt;span class="st"&gt;&quot;&lt;/span&gt;&lt;span class="va"&gt;$*&lt;/span&gt;&lt;span class="st"&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+
+mkdir -p ~/vids/yt/
+
+yt-dlp                                                        \
+  --format &#39;bv*[ext=mp4][height&lt;=720]+ba[ext=m4a]&#39;            \
+  --embed-chapters                                            \
+  --no-write-auto-subs                                        \
+  --sub-langs all,-live_chat                                  \
+  --embed-subs                                                \
+  --sub-format srt                                            \
+  --output &quot;%(upload_date)s %(uploader)s: %(title)s.%(ext)s&quot;  \
+  --no-warnings                                               \
+  --quiet                                                     \
+  --paths ~/vids/yt/                                          \
+  &quot;$*&quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Read the &lt;code&gt;yt-dlp&lt;/code&gt; documentation for a bit more info on
 what each option does. The tl;dr is essentially "make sure it's 720p or
 less (I don't care for higher quality), keep some of the metadata, and

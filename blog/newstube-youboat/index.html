@@ -140,39 +140,22 @@ ignore-article "*" "link =~ \"youtube.com\/shorts\""</code></pre>
     <p>Sometimes I just want to download a video to watch it later, or for when I’m in the train without an Internet
     connection. For that, I wrote a small shell script (essentially just <code>yt-dlp</code> with a few of its options
     set) to a file called <code>yt.sh</code>:</p>
-    <div class="sourceCode" id="cb7">
-      <pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"
-      tabindex="-1"></a><span class="co">#!/bin/sh</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class=
-"at">-p</span> ~/vids/yt/</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class=
-"ex">yt-dlp</span>                                                        <span class="dt">\</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--format</span> <span class=
-"st">'bv*[ext=mp4][height&lt;=720]+ba[ext=m4a]'</span>            <span class="dt">\</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--embed-chapters</span>                                            <span class="dt">\</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--no-write-auto-subs</span>                                        <span class="dt">\</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--sub-langs</span> all,-live_chat                                  <span class="dt">\</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--embed-subs</span>                                                <span class="dt">\</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--sub-format</span> srt                                            <span class="dt">\</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--output</span> <span class="st">"%(upload_date)s %(uploader)s: %(title)s.%(ext)s"</span>  <span class=
-"dt">\</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--no-warnings</span>                                               <span class="dt">\</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--quiet</span>                                                     <span class="dt">\</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class=
-"at">--paths</span> ~/vids/yt/                                          <span class="dt">\</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class=
-"va">$*</span><span class="st">"</span></span></code></pre>
-    </div>
+    <pre><code>#!/bin/sh
+
+mkdir -p ~/vids/yt/
+
+yt-dlp                                                        \
+  --format 'bv*[ext=mp4][height&lt;=720]+ba[ext=m4a]'            \
+  --embed-chapters                                            \
+  --no-write-auto-subs                                        \
+  --sub-langs all,-live_chat                                  \
+  --embed-subs                                                \
+  --sub-format srt                                            \
+  --output "%(upload_date)s %(uploader)s: %(title)s.%(ext)s"  \
+  --no-warnings                                               \
+  --quiet                                                     \
+  --paths ~/vids/yt/                                          \
+  "$*"</code></pre>
     <p>Read the <code>yt-dlp</code> documentation for a bit more info on what each option does. The tl;dr is
     essentially “make sure it’s 720p or less (I don’t care for higher quality), keep some of the metadata, and place it
     under a specific folder with a specific naming convention.”</p>
