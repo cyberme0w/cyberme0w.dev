@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>(Ab)using Newsboat to avoid YouTube’s web UI @ cyberme0w's</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="title">
+    <a href="/">cyberme0w's</a> <a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a> <span id=
+    "meow">🐾MEOW🐾</span>
+  </div>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href='/blog/'>blog</a>
+        </li>
+        <li>
+          <a href='/dev/'>dev</a>
+        </li>
+        <li>
+          <a href='/about/'>about</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <p>Published: 2026-03-09</p>
+  <main>
+    <h1 id="abusing-newsboat-to-avoid-youtubes-web-ui">(Ab)using Newsboat to avoid YouTube’s web UI</h1>
+    <p>YouTube supports RSS feeds natively. Getting a channel’s RSS feed is simple once you have the channel’s
+    <code>externalId</code>.</p>
+    <pre><code>#!/bin/sh
+
+url="$1"
+[ -z "$url" ] &amp;& echo "Usage: $(basename $0) URL" &amp;& exit 1
+
+html="$(curl -s "$url")"
+
+baseUrl="https://youtube.com/feeds/videos.xml?channel_id="
+channelId="$(echo "$html" | grep -oP '(?&lt;="externalId":").*?(?=")')"
+channelName="$(echo "$html" | grep -oP '(?&lt;=\&lt;title&gt;).*?(?= - YouTube\&lt;/title)')"
+
+echo "${baseUrl}${channelId} youtube # ${channelName}"</code></pre>
+    <p>Putting this into a file called <code>yt2rss.sh</code> and running it against Kurzgesagt’s channel will produce
+    the following:</p>
+    <pre><code>~ ❱ yt2rss.sh https://www.youtube.com/@kurzgesagt
+https://youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q youtube # Kurzgesagt – In a Nutshell</code></pre>
+    <p>This is a valid Newsboat entry for the URL file, with the <code>youtube</code> tag added, as well as the
+    channel’s name appended as a comment, since this is not obvious from the URL alone.</p>
+    <p>And within newsboat itself, we get the following:</p>
+    <figure>
+      <img src="/media/newsboat-001.png" alt="Newsboat open with a single feed for the channel “Kurzgesagt”">
+      <figcaption aria-hidden="true">
+        Newsboat open with a single feed for the channel “Kurzgesagt”
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="/media/newsboat-002.png" alt="Newsboat open on “Kurzgesagt”’s feed">
+      <figcaption aria-hidden="true">
+        Newsboat open on “Kurzgesagt”’s feed
+      </figcaption>
+    </figure>
+    <p>Neat!</p>
+    <h2 id="begone-shorts"><em>Begone shorts!</em></h2>
+    <p>One downside of using YouTube’s RSS feeds, is that YouTube Shorts are not distinguished from regular videos.</p>
+    <p>Not to worry though - we can filter them out by configuring Newsboat (by creating/editing
+    <code>$XDG_CONFIG_HOME/newsboat/config</code>):</p>
+    <pre><code># filter out shorts
+ignore-mode "display"
+ignore-article "*" "link =~ \"youtube.com\/shorts\""</code></pre>
+    <p>This returns a (<em>slightly</em>) more sane list of videos.</p>
+    <figure>
+      <img src="/media/newsboat-003.png" alt=
+      "The previously displayed feed is filtered such that YouTube Shorts no longer appear">
+      <figcaption aria-hidden="true">
+        The previously displayed feed is filtered such that YouTube Shorts no longer appear
+      </figcaption>
+    </figure>
+    <p>Since Newsboat is primarily built with text-based feeds in mind, its default action when “opening” an entry is
+    to open a browser using the entry’s URL.</p>
+    <p>For YouTube (or other media such as mp3/podcasts), this won’t do. As mentioned previously, YouTube does this
+    neat little trick where it commits sudoku mid-video in my browser.</p>
+    <p>Luckily, Newsboat provides us with a way to interact with feed entries in a different way:</p>
+    <center>
+      🌈 <em>macros</em> 🌈
+    </center>
+    <h2 id="macro-this-macro-that">macro this macro that</h2>
+    <p>Once again, edit Newsboat’s config file and add the following:</p>
+    <pre><code>macro m set browser "/usr/bin/mpv --ytdl-format=best %u --no-terminal &amp;"; open-in-browser; set browser lynx</code></pre>
+    <p>Breaking it up:</p>
+    <ol type="1">
+      <li>
+        <p><code>macro m set browser "/usr/bin/mpv --ytdl-format=best %u --no-terminal &amp;"</code></p>
+        <p>This changes the behavior so entries are opened using the provided <code>mpv</code> command instead (with
+        <code>%u</code> replaced by the entry’s URL).</p>
+      </li>
+      <li>
+        <p><code>open-in-browser</code></p>
+        <p>This one should be fairly straightforward.</p>
+      </li>
+      <li>
+        <p><code>set browser lynx</code></p>
+        <p>And finally, reset the browser to the default (lynx).</p>
+      </li>
+    </ol>
+    <p>This already works well enough, but add a few more channels, and it gets a bit cumbersome to zoom up and down.
+    Instead, let’s add a new feed (a <em>query feed</em>, to use Newsboat nomenclature) to
+    <code>$XDG_CONFIG_HOME/newsboat/urls</code>:</p>
+    <pre><code>"query:YouTube Videos:(tags # \"youtube\")</code></pre>
+    <p>And additionally, let’s make sure to pre-populate query feeds (so they don’t reset to empty each time you open
+    Newsboat) by adding this to the config file:</p>
+    <pre><code>prepopulate-query-feeds yes</code></pre>
+    <p>This results in the following:</p>
+    <figure>
+      <img src="/media/newsboat-004.png" alt=
+      "Newsboat displaying the query feed at the top, followed by the individual YouTube channel feeds.">
+      <figcaption aria-hidden="true">
+        Newsboat displaying the query feed at the top, followed by the individual YouTube channel feeds.
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="/media/newsboat-005.png" alt=
+      "Opening the query feed lists all new videos together, sorted by recency.">
+      <figcaption aria-hidden="true">
+        Opening the query feed lists all new videos together, sorted by recency.
+      </figcaption>
+    </figure>
+    <p>The “workflow” when checking out if anything new came out is now as follows:</p>
+    <ol type="1">
+      <li>open Newsboat</li>
+      <li>hit <code>&lt;C-R&gt;</code> to refresh all feeds</li>
+      <li>open the query feed</li>
+      <li>hit <code>,m</code> to watch a video or <code>,d</code> to download it for later using <code>yt-dlp</code>
+      (see below).</li>
+    </ol>
+    <h2 id="thats-nice-and-all-but-i-travel-with-deutsche-bahn">That’s nice and all, but I travel with Deutsche
+    Bahn</h2>
+    <p>Sometimes I just want to download a video to watch it later, or for when I’m in the train without an Internet
+    connection. For that, I wrote a small shell script (essentially just <code>yt-dlp</code> with a few of its options
+    set) to a file called <code>yt.sh</code>:</p>
+    <div class="sourceCode" id="cb7">
+      <pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"
+      tabindex="-1"></a><span class="co">#!/bin/sh</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class=
+"at">-p</span> ~/vids/yt/</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class=
+"ex">yt-dlp</span>                                                        <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--format</span> <span class=
+"st">'bv*[ext=mp4][height&lt;=720]+ba[ext=m4a]'</span>            <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--embed-chapters</span>                                            <span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--no-write-auto-subs</span>                                        <span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--sub-langs</span> all,-live_chat                                  <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--embed-subs</span>                                                <span class="dt">\</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--sub-format</span> srt                                            <span class="dt">\</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--output</span> <span class="st">"%(upload_date)s %(uploader)s: %(title)s.%(ext)s"</span>  <span class=
+"dt">\</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--no-warnings</span>                                               <span class="dt">\</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--quiet</span>                                                     <span class="dt">\</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class=
+"at">--paths</span> ~/vids/yt/                                          <span class="dt">\</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class=
+"va">$*</span><span class="st">"</span></span></code></pre>
+    </div>
+    <p>Read the <code>yt-dlp</code> documentation for a bit more info on what each option does. The tl;dr is
+    essentially “make sure it’s 720p or less (I don’t care for higher quality), keep some of the metadata, and place it
+    under a specific folder with a specific naming convention.”</p>
+    <p>With this out of the way, we can now call that script from within Newsboat, and pass it the current entry’s URL.
+    First, we add the following to Newsboat’s config:</p>
+    <pre><code>macro d set browser "yt.sh %u &amp;"; open-in-browser; set browser lynx</code></pre>
+    <p>… then hit <code>&lt;,d&gt;</code> instead of <code>&lt;,m&gt;</code>, and it will start downloading via
+    <code>yt-dlp</code> in the background. You can close Newsboat and the download will continue. I would recommend
+    keeping it down to at most three or four concurrent downloads, to avoid YouTube blocking your IP address. Ask me
+    how I now.</p>
+    <h2 id="bye-now">bye now</h2>
+    <p>And that’s it.</p>
+    <blockquote>
+      <p>“Isn’t that a bit janky?”</p>
+    </blockquote>
+    <p>Yep.</p>
+    <blockquote>
+      <p>“Am I missing out on anything by not interacting with YouTube’s website?”</p>
+    </blockquote>
+    <p>Well, I don’t think so. YouTube comments are pure, unfiltered LLM brainrot and the recommended section usually
+    works against you(r time). Of course, your mileage may vary, but in general I don’t think it’s too hot a take to
+    say you’re not missing out.</p>
+  </main>
+  <hr>
+  <footer>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA 4.0</a>
+  </footer>
+</body>
+</html>

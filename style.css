@@ -168,6 +168,23 @@ main ul {
   list-style: georgian;
 }
 
+blockquote {
+  font-style: italic;
+}
+
+/* PRE / CODE BLOCKS */
+code {
+  border: 1px solid var(--link-color);
+}
+
+pre code {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--link-color);
+  padding: 1em;
+  overflow: scroll;
+}
+
 /* HORIZONTAL BAR */
 hr {
   border-color: var(--separator-color); /* Chrome + Safari */
