@@ -26,65 +26,68 @@
       </ul>
     </nav>
   </header>
-  <h1 id="openbike">OpenBike</h1>
-  <p>For the uninitiated, <a href="https://nextbike.net">nextbike</a> is a bike-sharing company. Clients pay a
-  subscription fee and are allowed to rent bikes from multiple stations, with some cities also offering ‘floating’
-  bikes, which can be rented and returned anywhere within given areas.</p>
-  <p>I myself have been a <em>mostly happy</em> customer of nextbike for some time now. In my case, not having to deal
-  with maintenance, as well as not using up precious space in my small apartment are great benefits. It also allows me
-  to go somewhere by foot and then come back by bike or vice-versa, which is rather convenient.</p>
-  <p>I say <em>mostly happy</em>, because while I am happy with the actual service, their mobile (Android) app is
-  another story. Briefly pointing out what has been bothering me in no particular order:</p>
-  <ul>
-    <li>The application is closed source (<em>boo!</em>)</li>
-    <li>The landing screen seems poorly optimized: a zoomed-out map loads an indecent number of bike markers, which
-    cause the entire app to crawl to a halt on older hardware</li>
-    <li>The map is filled with e-scooters even though these are not available for rent via the app (basically free ads
-    for Tier, who <a href=
-    "https://web.archive.org/web/20221209215725/https://www.reuters.com/business/autos-transportation/e-scooter-firm-tier-buys-nextbike-bid-expand-offerings-2021-11-15/">
-      recently acquired nextbike</a>)
-    </li>
-    <li>While it’s possible to filter out e-scooters, <em>you have to do that every single time you open the app</em>,
-    after waiting for the app to stop lagging</li>
-    <li>There is no way to mark stations as favorite. Sometimes, all I want is to be able to quickly check if one of my
-    regular stations has a bike available.</li>
-  </ul>
-  <p>So - what now?</p>
-  <p>After a bit of research, I found an alternative client called <a href=
-  "https://f-droid.org/packages/com.example.hochi.nextcompanion/">NextCompanion</a> by <a href=
-  "https://github.com/cybre-finn/">cybre-finn</a>. They took some time to reverse engineer nextbike’s API and published
-  <a href="https://github.com/cybre-finn/nextbike-api-reverse-engineering">their results</a> (<em>thanks!</em>).</p>
-  <p>NextCompanion calls itself a <em>“minimalistic client for NextBike”</em> and well… it is. With it, you can type
-  out a bike’s number to rent it, and get an overview of your rented bikes - that’s all. While I’m sure people on the
-  far left end of the minimalism/bloat spectrum will be overjoyed using it, I would prefer to have one or two more
-  features.</p>
-  <p>Another thing I stumbled upon during my research, was the <em>actual publicly available API documentation</em>… so
-  with that, and inspired by the simplicity of NextCompanion, I decided I’d write my own app with the following
-  features:</p>
-  <ul>
-    <li>QR-Code scanner to replace manually having to input the bike’s ID</li>
-    <li>Re-triggering an unlock, since sometimes locks get stuck</li>
-    <li>Pausing/resuming rentals</li>
-    <li>Overview of favorite stations and their bike counts</li>
-    <li>Locally stored rental history (to calculate some statistics)</li>
-  </ul>
-  <p>The result is exactly what I want from a mobile application - simple and functional:</p>
-  <div style="display: flex;"><img src="/media/open-bike-001-main.png" alt=
-  "Preview of the main window of my Android app 'OpenBike'" width="33%"><img src="/media/open-bike-002-qr-scanner.png"
-  alt="Preview of the QR code scanner window of my Android app 'OpenBike'" width="33%"><img src=
-  "/media/open-bike-003-details.png" alt="Preview of the rental details window of my Android app 'OpenBike'" width=
-  "33%"></div>
-  <p>Clicking on the (+) icon opens up the QR code scanner, allowing you to quickly scan a bike. Current rentals are
-  displayed on the main screen, and you can add certain stations to your ‘bookmarks’, by clicking on a rental and
-  clicking ‘bookmark starting station’.</p>
-  <p>The repository is now public and the first version should pop up in <a href=
-  "https://f-droid.org/en/packages/dev.cyberme0w.openbike/">F-Droid</a> shortly. The APK is also available to download
-  from the repository’s <a href="https://codeberg.org/cyberme0w/open-bike/releases">Releases</a> page (although the
-  recommended way is via F-Droid].</p>
+  <p>Published: 2023-08-15</p>
+  <main>
+    <h1 id="openbike">OpenBike</h1>
+    <p>For the uninitiated, <a href="https://nextbike.net">nextbike</a> is a bike-sharing company. Clients pay a
+    subscription fee and are allowed to rent bikes from multiple stations, with some cities also offering ‘floating’
+    bikes, which can be rented and returned anywhere within given areas.</p>
+    <p>I myself have been a <em>mostly happy</em> customer of nextbike for some time now. In my case, not having to
+    deal with maintenance, as well as not using up precious space in my small apartment are great benefits. It also
+    allows me to go somewhere by foot and then come back by bike or vice-versa, which is rather convenient.</p>
+    <p>I say <em>mostly happy</em>, because while I am happy with the actual service, their mobile (Android) app is
+    another story. Briefly pointing out what has been bothering me in no particular order:</p>
+    <ul>
+      <li>The application is closed source (<em>boo!</em>)</li>
+      <li>The landing screen seems poorly optimized: a zoomed-out map loads an indecent number of bike markers, which
+      cause the entire app to crawl to a halt on older hardware</li>
+      <li>The map is filled with e-scooters even though these are not available for rent via the app (basically free
+      ads for Tier, who <a href=
+      "https://web.archive.org/web/20221209215725/https://www.reuters.com/business/autos-transportation/e-scooter-firm-tier-buys-nextbike-bid-expand-offerings-2021-11-15/">
+        recently acquired nextbike</a>)
+      </li>
+      <li>While it’s possible to filter out e-scooters, <em>you have to do that every single time you open the
+      app</em>, after waiting for the app to stop lagging</li>
+      <li>There is no way to mark stations as favorite. Sometimes, all I want is to be able to quickly check if one of
+      my regular stations has a bike available.</li>
+    </ul>
+    <p>So - what now?</p>
+    <p>After a bit of research, I found an alternative client called <a href=
+    "https://f-droid.org/packages/com.example.hochi.nextcompanion/">NextCompanion</a> by <a href=
+    "https://github.com/cybre-finn/">cybre-finn</a>. They took some time to reverse engineer nextbike’s API and
+    published <a href="https://github.com/cybre-finn/nextbike-api-reverse-engineering">their results</a>
+    (<em>thanks!</em>).</p>
+    <p>NextCompanion calls itself a <em>“minimalistic client for NextBike”</em> and well… it is. With it, you can type
+    out a bike’s number to rent it, and get an overview of your rented bikes - that’s all. While I’m sure people on the
+    far left end of the minimalism/bloat spectrum will be overjoyed using it, I would prefer to have one or two more
+    features.</p>
+    <p>Another thing I stumbled upon during my research, was the <em>actual publicly available API documentation</em>…
+    so with that, and inspired by the simplicity of NextCompanion, I decided I’d write my own app with the following
+    features:</p>
+    <ul>
+      <li>QR-Code scanner to replace manually having to input the bike’s ID</li>
+      <li>Re-triggering an unlock, since sometimes locks get stuck</li>
+      <li>Pausing/resuming rentals</li>
+      <li>Overview of favorite stations and their bike counts</li>
+      <li>Locally stored rental history (to calculate some statistics)</li>
+    </ul>
+    <p>The result is exactly what I want from a mobile application - simple and functional:</p>
+    <div style="display: flex;"><img src="/media/open-bike-001-main.png" alt=
+    "Preview of the main window of my Android app 'OpenBike'" width="33%"><img src=
+    "/media/open-bike-002-qr-scanner.png" alt="Preview of the QR code scanner window of my Android app 'OpenBike'"
+    width="33%"><img src="/media/open-bike-003-details.png" alt=
+    "Preview of the rental details window of my Android app 'OpenBike'" width="33%"></div>
+    <p>Clicking on the (+) icon opens up the QR code scanner, allowing you to quickly scan a bike. Current rentals are
+    displayed on the main screen, and you can add certain stations to your ‘bookmarks’, by clicking on a rental and
+    clicking ‘bookmark starting station’.</p>
+    <p>The repository is now public and the first version should pop up in <a href=
+    "https://f-droid.org/en/packages/dev.cyberme0w.openbike/">F-Droid</a> shortly. The APK is also available to
+    download from the repository’s <a href="https://codeberg.org/cyberme0w/open-bike/releases">Releases</a> page
+    (although the recommended way is via F-Droid].</p>
+  </main>
   <hr>
   <footer>
-    cyberme0w.dev © 2025 - 2026 - <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC
-    BY-NC-SA 4.0</a>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA 4.0</a>
   </footer>
 </body>
 </html>

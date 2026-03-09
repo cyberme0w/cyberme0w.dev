@@ -66,7 +66,8 @@
 html {
   background-color: var(--bg-color);
   color: var(--fg-color);
-  font: 16px 'Fira Code', Arial, Helvetica, sans-serif;
+  font-family: monospace;
+  font-size: 16px;
 }
 html::-webkit-scrollbar { display: none; }
 body {
@@ -148,14 +149,24 @@ nav ul li a:hover { font-weight: normal; }
     height: 0px;
   }
 }
-.active-btn {
-  padding: 0px;
-  background-color: var(--bg-button);
+li.active {
+  background-color: var(--link-color);
+}
+li.active a {
+  color: var(--bg-color);
+}
+li.active:hover a {
+  color: var(--link-color);
 }
 
 /* LINKS */
 a { color: var(--link-color); }
-a:hover { font-weight: bold; }
+a:hover { color: var(--link-color); font-weight: bold; }
+
+/* MAIN / BODY */
+main ul {
+  list-style: georgian;
+}
 
 /* HORIZONTAL BAR */
 hr {
