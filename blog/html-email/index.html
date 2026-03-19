@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HTML Email @ cyberme0w's</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="title">
+    <a href="/">cyberme0w's</a> <a href="#meow"><img alt="Cat logo" src="/favicon.ico" height="60"></a> <span id=
+    "meow">🐾MEOW🐾</span>
+  </div>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href='/blog/'>blog</a>
+        </li>
+        <li>
+          <a href='/dev/'>dev</a>
+        </li>
+        <li>
+          <a href='/about/'>about</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <p>Published: 2026-03-19</p>
+  <main>
+    <h1 id="html-email">HTML Email</h1>
+    <p>Let me preface this by saying that I am going to be slightly pedantic (or, as the German say, a <a href=
+    "https://de.wikipedia.org/wiki/Korinthenkacker">Korinthenkacker</a>) for the next <code>x &lt; 10 minutes</code>.
+    If you’re not in the mood to read a bit of a rant, just skip this one.</p>
+    <hr>
+    <p>Much like any other day, after having some breakfast, I checked my email. I used to do this on my phone, but
+    given <a href="https://keepandroidopen.org/">Android is unlikely to remain an option</a>, I might as well get used
+    to not using a (smart) phone, so I opened up <a href="https://neomutt.org/">Neomutt</a> and told it to go
+    fetch.</p>
+    <p>Other than the usual stuff, which promptly got <del>replied to/archived/</del>deleted, I noticed this email:</p>
+    <pre><code>Concert Hall
+World Water Day Celebration and Concert Highlights! (120K)</code></pre>
+    <p>I’m not much of a newsletter person, and quite honestly think they are a strictly inferior version of RSS/Atom
+    feeds, but I do subscribe to them on occasion whenever nothing else better is available.</p>
+    <p>“Ok, Mr.&nbsp;Nothing Burger. You got an email. What’s the issue?” I hear you say. Well, that last number was
+    bothering me a bit. I had a few minutes to spare (also, my cat jumped into my lap, making getting up a criminal
+    offense), so I decided to take a closer look. Mainly, I saw <code>120K</code> and something in my brain went “yeah
+    no that’s bullshit”.</p>
+    <h2 id="what-in-the-whitespace">what in the whitespace</h2>
+    <p>I opened up the email’s <code>html</code> part in Neovim and looked for the <code>&lt;body&gt;</code> tag.</p>
+    <pre><code>871 &lt;body id="a" ...</code></pre>
+    <p>Well that’s concerning. The entire file only has 1052 lines, and the body starts only at line 871. But mind you,
+    not all of those 871 lines are nonsensical <code>&lt;style&gt;</code>-spam. Some of them are just empty newlines.
+    To give you an idea of how much that is, here are those same 118 lines, numbered:</p>
+    <pre><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</code></pre>
+    <p>Yeah.</p>
+    <p>There were a few other spots like this, but none as big:</p>
+    <ul>
+      <li>183-190</li>
+      <li>194-197</li>
+      <li>538-552</li>
+      <li>565-579</li>
+      <li>636-650</li>
+      <li>709-722</li>
+      <li>738-751</li>
+      <li>810-823</li>
+      <li>…</li>
+    </ul>
+    <p>It’s just whitespace, but for reference, getting rid of it would have reduced the total lines from
+    <code>1052</code> to <code>815</code>.</p>
+    <p>There are also 161 lines of <code>[data-ogsc]</code> styling which - as best I could gather in the two minutes I
+    looked at this - is related to dark color schemes (do feel free to correct me via plaintext email, though). You
+    know what’s better than having to CSS your way out of a light color scheme? Using plain text and allowing the
+    reader to use their own color scheme. Removing those dropped the line count from <code>815</code> to
+    <code>636</code>.</p>
+    <p>That’s close to half the file (by line count) gone.</p>
+    <p>As a sidenote, using <code>tidy</code> to clean up the original HTML file made it grow slightly:</p>
+    <pre><code>/tmp ❱ tidy -w html 2&gt;/dev/null | wc -l
+1426</code></pre>
+    <p>But all that is meaningless anyway, since what we really care about (that is, the <em>content</em> of the
+    newsletter) is somewhere in those 181 <code>&lt;body&gt;</code> lines. So let’s <code>tidy</code> those up
+    instead:</p>
+    <pre><code>/tmp ❱ sed -n '/&lt;body/,/&lt;\/body&gt;$/p' html &gt; body
+/tmp ❱ tidy body &gt; tidy-body</code></pre>
+    <p>By default, <code>tidy</code> wraps lines at 80 characters, which increased the line count to <em>*sigh*</em>
+    1134. Disable line wrapping helps a bit:</p>
+    <pre><code>/tmp ❱ tidy -w body &gt; tidy-body
+/tmp ❱ wc -l tidy-body
+509 tidy-body</code></pre>
+    <p>Neat.</p>
+    <h2 id="to-style-or-not-to-style">to style or not to style</h2>
+    <p>I had the poor idea of checking how many times they use inline styles…</p>
+    <pre><code>/tmp ❱ grep 'style=' tidy-body | wc -l
+209</code></pre>
+    <p>… and now I’m questioning my sanity. What even is the point of having ~1000 lines of <code>&lt;style&gt;</code>
+    spam if you’re just going to put <code>style="..."</code> stuff in the <code>&lt;body&gt;</code> anyway?</p>
+    <p>At this point, my cat has decided to move on with her day, and so will I, so here’s a speed round.</p>
+    <ol start="0" type="1">
+      <li>
+        <p>Open up Neovim.</p>
+      </li>
+      <li>
+        <p>Remove all HTML tags:</p>
+        <p><code>:%s/&lt;.\{-}&gt;//g</code>.</p>
+      </li>
+      <li>
+        <p>Get rid of blocks of newlines:</p>
+        <p><code>:%s/\n\n*/\r\r/g</code>.</p>
+      </li>
+      <li>
+        <p>Move the table values around to work in plaintext.</p>
+      </li>
+      <li>
+        <p>Get rid of further non-sense (like removing all the <code>&amp;nbsp;</code> and other non-visible characters
+        I found, as well as contact info, address, etc - the website and newsletter unsubscription link remained).</p>
+      </li>
+    </ol>
+    <p>The result is a 48 (wrapped) line long plaintext email, still containing the entirety of the information, in a
+    fraction of the space:</p>
+    <pre><code>/tmp ❱ size html plaintext
+html: 110473 bytes
+plaintext: 2200 bytes</code></pre>
+    <p>That’s 1.9% of the initial size. For reference, this entire rant (4.6 KB) would fit inside that original email
+    24 times.</p>
+    <p>Ugh.</p>
+  </main>
+  <hr>
+  <footer>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1'>CC BY-NC-SA 4.0</a>
+  </footer>
+</body>
+</html>

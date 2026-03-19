@@ -5,10 +5,243 @@
     <link>https://cyberme0w.dev</link>
     <description></description>
     <language>en-us</language>
-    <pubDate>Mon, 09 Mar 2026 17:12:35 +0100</pubDate>
-    <lastBuildDate>2026-03-09T17:12:35Z</lastBuildDate>
+    <pubDate>Thu, 19 Mar 2026 13:48:19 +0100</pubDate>
+    <lastBuildDate>2026-03-19T13:48:19Z</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link xmlns:atom='http://www.w3.org/2005/Atom' href='https://cyberme0w.dev/feed.xml' rel='self' type='application/rss+xml'/>
+    <item>
+      <title>HTML Email</title>
+      <link>https://cyberme0w.dev/blog/html-email/</link>
+      <guid>https://cyberme0w.dev/blog/html-email/</guid>
+      <pubDate>Thu, 19 Mar 2026 00:00:00 +0100</pubDate>
+      <description>
+&lt;h1 id="html-email"&gt;HTML Email&lt;/h1&gt;
+&lt;p&gt;Let me preface this by saying that I am going to be slightly pedantic
+(or, as the German say, a &lt;a
+href="https://de.wikipedia.org/wiki/Korinthenkacker"&gt;Korinthenkacker&lt;/a&gt;)
+for the next &lt;code&gt;x <![CDATA[&lt;]]> 10 minutes&lt;/code&gt;. If you're not in the mood
+to read a bit of a rant, just skip this one.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Much like any other day, after having some breakfast, I checked my
+email. I used to do this on my phone, but given &lt;a
+href="https://keepandroidopen.org/"&gt;Android is unlikely to remain an
+option&lt;/a&gt;, I might as well get used to not using a (smart) phone, so I
+opened up &lt;a href="https://neomutt.org/"&gt;Neomutt&lt;/a&gt; and told it to go
+fetch.&lt;/p&gt;
+&lt;p&gt;Other than the usual stuff, which promptly got &lt;del&gt;replied
+to/archived/&lt;/del&gt;deleted, I noticed this email:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Concert Hall
+World Water Day Celebration and Concert Highlights! (120K)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I'm not much of a newsletter person, and quite honestly think they
+are a strictly inferior version of RSS/Atom feeds, but I do subscribe to
+them on occasion whenever nothing else better is available.&lt;/p&gt;
+&lt;p&gt;"Ok, Mr. Nothing Burger. You got an email. What's the issue?" I hear
+you say. Well, that last number was bothering me a bit. I had a few
+minutes to spare (also, my cat jumped into my lap, making getting up a
+criminal offense), so I decided to take a closer look. Mainly, I saw
+&lt;code&gt;120K&lt;/code&gt; and something in my brain went "yeah no that's
+bullshit".&lt;/p&gt;
+&lt;h2 id="what-in-the-whitespace"&gt;what in the whitespace&lt;/h2&gt;
+&lt;p&gt;I opened up the email's &lt;code&gt;html&lt;/code&gt; part in Neovim and looked
+for the &lt;code&gt;<![CDATA[&lt;]]>body<![CDATA[&gt;]]>&lt;/code&gt; tag.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;871 <![CDATA[&lt;]]>body id=&quot;a&quot; ...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Well that's concerning. The entire file only has 1052 lines, and the
+body starts only at line 871. But mind you, not all of those 871 lines
+are nonsensical &lt;code&gt;<![CDATA[&lt;]]>style<![CDATA[&gt;]]>&lt;/code&gt;-spam. Some of them are just
+empty newlines. To give you an idea of how much that is, here are those
+same 118 lines, numbered:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Yeah.&lt;/p&gt;
+&lt;p&gt;There were a few other spots like this, but none as big:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;183-190&lt;/li&gt;
+&lt;li&gt;194-197&lt;/li&gt;
+&lt;li&gt;538-552&lt;/li&gt;
+&lt;li&gt;565-579&lt;/li&gt;
+&lt;li&gt;636-650&lt;/li&gt;
+&lt;li&gt;709-722&lt;/li&gt;
+&lt;li&gt;738-751&lt;/li&gt;
+&lt;li&gt;810-823&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It's just whitespace, but for reference, getting rid of it would have
+reduced the total lines from &lt;code&gt;1052&lt;/code&gt; to &lt;code&gt;815&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;There are also 161 lines of &lt;code&gt;[data-ogsc]&lt;/code&gt; styling which -
+as best I could gather in the two minutes I looked at this - is related
+to dark color schemes (do feel free to correct me via plaintext email,
+though). You know what's better than having to CSS your way out of a
+light color scheme? Using plain text and allowing the reader to use
+their own color scheme. Removing those dropped the line count from
+&lt;code&gt;815&lt;/code&gt; to &lt;code&gt;636&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;That's close to half the file (by line count) gone.&lt;/p&gt;
+&lt;p&gt;As a sidenote, using &lt;code&gt;tidy&lt;/code&gt; to clean up the original HTML
+file made it grow slightly:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/tmp ❱ tidy -w html 2<![CDATA[&gt;]]>/dev/null | wc -l
+1426&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But all that is meaningless anyway, since what we really care about
+(that is, the &lt;em&gt;content&lt;/em&gt; of the newsletter) is somewhere in those
+181 &lt;code&gt;<![CDATA[&lt;]]>body<![CDATA[&gt;]]>&lt;/code&gt; lines. So let's &lt;code&gt;tidy&lt;/code&gt; those up
+instead:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/tmp ❱ sed -n &#39;/<![CDATA[&lt;]]>body/,/<![CDATA[&lt;]]>\/body<![CDATA[&gt;]]>$/p&#39; html <![CDATA[&gt;]]> body
+/tmp ❱ tidy body <![CDATA[&gt;]]> tidy-body&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;By default, &lt;code&gt;tidy&lt;/code&gt; wraps lines at 80 characters, which
+increased the line count to &lt;em&gt;*sigh*&lt;/em&gt; 1134. Disable line wrapping
+helps a bit:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/tmp ❱ tidy -w body <![CDATA[&gt;]]> tidy-body
+/tmp ❱ wc -l tidy-body
+509 tidy-body&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Neat.&lt;/p&gt;
+&lt;h2 id="to-style-or-not-to-style"&gt;to style or not to style&lt;/h2&gt;
+&lt;p&gt;I had the poor idea of checking how many times they use inline
+styles...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/tmp ❱ grep &#39;style=&#39; tidy-body | wc -l
+209&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;... and now I'm questioning my sanity. What even is the point of
+having ~1000 lines of &lt;code&gt;<![CDATA[&lt;]]>style<![CDATA[&gt;]]>&lt;/code&gt; spam if you're just
+going to put &lt;code&gt;style="..."&lt;/code&gt; stuff in the
+&lt;code&gt;<![CDATA[&lt;]]>body<![CDATA[&gt;]]>&lt;/code&gt; anyway?&lt;/p&gt;
+&lt;p&gt;At this point, my cat has decided to move on with her day, and so
+will I, so here's a speed round.&lt;/p&gt;
+&lt;ol start="0" type="1"&gt;
+&lt;li&gt;&lt;p&gt;Open up Neovim.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Remove all HTML tags:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;:%s/<![CDATA[&lt;]]>.\{-}<![CDATA[&gt;]]>//g&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Get rid of blocks of newlines:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;:%s/\n\n*/\r\r/g&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Move the table values around to work in plaintext.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Get rid of further non-sense (like removing all the
+&lt;code&gt;&amp;nbsp;&lt;/code&gt; and other non-visible characters I found, as
+well as contact info, address, etc - the website and newsletter
+unsubscription link remained).&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The result is a 48 (wrapped) line long plaintext email, still
+containing the entirety of the information, in a fraction of the
+space:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/tmp ❱ size html plaintext
+html: 110473 bytes
+plaintext: 2200 bytes&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That's 1.9% of the initial size. For reference, this entire rant (4.6
+KB) would fit inside that original email 24 times.&lt;/p&gt;
+&lt;p&gt;Ugh.&lt;/p&gt;
+      </description>
+    </item>
     <item>
       <title>(Ab)using Newsboat to avoid YouTube’s web UI</title>
       <link>https://cyberme0w.dev/blog/newstube-youboat/</link>
@@ -27,8 +260,8 @@ url=&quot;$1&quot;
 html=&quot;$(curl -s &quot;$url&quot;)&quot;
 
 baseUrl=&quot;https://youtube.com/feeds/videos.xml?channel_id=&quot;
-channelId=&quot;$(echo &quot;$html&quot; | grep -oP &#39;(?&lt;=&quot;externalId&quot;:&quot;).*?(?=&quot;)&#39;)&quot;
-channelName=&quot;$(echo &quot;$html&quot; | grep -oP &#39;(?&lt;=\&lt;title&gt;).*?(?= - YouTube\&lt;/title)&#39;)&quot;
+channelId=&quot;$(echo &quot;$html&quot; | grep -oP &#39;(?<![CDATA[&lt;]]>=&quot;externalId&quot;:&quot;).*?(?=&quot;)&#39;)&quot;
+channelName=&quot;$(echo &quot;$html&quot; | grep -oP &#39;(?<![CDATA[&lt;]]>=\<![CDATA[&lt;]]>title<![CDATA[&gt;]]>).*?(?= - YouTube\<![CDATA[&lt;]]>/title)&#39;)&quot;
 
 echo &quot;${baseUrl}${channelId} youtube # ${channelName}&quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Putting this into a file called &lt;code&gt;yt2rss.sh&lt;/code&gt; and running it
@@ -118,7 +351,7 @@ videos together, sorted by recency.&lt;/figcaption&gt;
 follows:&lt;/p&gt;
 &lt;ol type="1"&gt;
 &lt;li&gt;open Newsboat&lt;/li&gt;
-&lt;li&gt;hit &lt;code&gt;&lt;C-R&gt;&lt;/code&gt; to refresh all feeds&lt;/li&gt;
+&lt;li&gt;hit &lt;code&gt;<![CDATA[&lt;]]>C-R<![CDATA[&gt;]]>&lt;/code&gt; to refresh all feeds&lt;/li&gt;
 &lt;li&gt;open the query feed&lt;/li&gt;
 &lt;li&gt;hit &lt;code&gt;,m&lt;/code&gt; to watch a video or &lt;code&gt;,d&lt;/code&gt; to download
 it for later using &lt;code&gt;yt-dlp&lt;/code&gt; (see below).&lt;/li&gt;
@@ -134,7 +367,7 @@ its options set) to a file called &lt;code&gt;yt.sh&lt;/code&gt;:&lt;/p&gt;
 mkdir -p ~/vids/yt/
 
 yt-dlp                                                        \
-  --format &#39;bv*[ext=mp4][height&lt;=720]+ba[ext=m4a]&#39;            \
+  --format &#39;bv*[ext=mp4][height<![CDATA[&lt;]]>=720]+ba[ext=m4a]&#39;            \
   --embed-chapters                                            \
   --no-write-auto-subs                                        \
   --sub-langs all,-live_chat                                  \
@@ -153,8 +386,8 @@ place it under a specific folder with a specific naming convention."&lt;/p&gt;
 Newsboat, and pass it the current entry's URL. First, we add the
 following to Newsboat's config:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;macro d set browser &quot;yt.sh %u &amp;&quot;; open-in-browser; set browser lynx&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;... then hit &lt;code&gt;&lt;,d&gt;&lt;/code&gt; instead of
-&lt;code&gt;&lt;,m&gt;&lt;/code&gt;, and it will start downloading via
+&lt;p&gt;... then hit &lt;code&gt;<![CDATA[&lt;]]>,d<![CDATA[&gt;]]>&lt;/code&gt; instead of
+&lt;code&gt;<![CDATA[&lt;]]>,m<![CDATA[&gt;]]>&lt;/code&gt;, and it will start downloading via
 &lt;code&gt;yt-dlp&lt;/code&gt; in the background. You can close Newsboat and the
 download will continue. I would recommend keeping it down to at most
 three or four concurrent downloads, to avoid YouTube blocking your IP
